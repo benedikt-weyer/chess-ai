@@ -39,6 +39,10 @@ public class Piece {
         return boardPosition.getBoardX();
     }
 
+    public void setPieceType(PieceType pieceType) {
+        this.pieceType = pieceType;
+    }
+
     public int getBoardY() {
         return boardPosition.getBoardY();
     }

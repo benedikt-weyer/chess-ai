@@ -62,9 +62,14 @@ public class FenLoader {
         //determine turn color
         PieceColor turnColor = turnColorChar.charAt(0) == 'w' ? PieceColor.WHITE : PieceColor.BLACK;
 
+        //determine castle rights
+        boolean castleRightsWhiteK = castleRightString.contains("K");
+        boolean castleRightsWhiteQ = castleRightString.contains("Q");
+        boolean castleRightsBlackK = castleRightString.contains("k");
+        boolean castleRightsBlackQ = castleRightString.contains("q");
 
         //create and return new game state
-        GameState gameState = new GameState(pieces, turnColor);
+        GameState gameState = new GameState(pieces, turnColor, castleRightsWhiteK, castleRightsWhiteQ, castleRightsBlackK, castleRightsBlackQ);
 
         return gameState;
     }
@@ -100,7 +105,20 @@ public class FenLoader {
             if(y != 0) fenString += '/';
         }
 
-        return fenString + " w KQkq - 0 1"; //TODO
+
+        //turn color
+        fenString += gameState.getTurnColor() == PieceColor.WHITE ? " w" : " b";
+
+
+        //castle rights
+        fenString +=  " ";
+        if(gameState.isCastleRightsWhiteK()) fenString +=  "K";
+        if(gameState.isCastleRightsWhiteQ()) fenString +=  "Q";
+        if(gameState.isCastleRightsBlackK()) fenString +=  "k";
+        if(gameState.isCastleRightsBlackQ()) fenString +=  "q";
+        fenString +=  " ";
+
+        return fenString + "- 0 1"; //TODO
     }
 
 

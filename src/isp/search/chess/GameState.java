@@ -3,17 +3,26 @@ package isp.search.chess;
 import java.util.List;
 
 import isp.search.chess.enums.PieceColor;
+import isp.search.chess.enums.PieceType;
 import isp.search.chess.util.BoardPosition;
 import isp.search.chess.util.MoveCalculator;
 
 public class GameState {
     private List<Piece> pieces;
     private PieceColor turnColor;
+    private boolean castleRightsWhiteK, castleRightsWhiteQ, castleRightsBlackK, castleRightsBlackQ;
+
+    private static final short ROW_COUNT = 8;
 
 
-    public GameState(List<Piece> pieces, PieceColor turnColor) {
+    public GameState(List<Piece> pieces, PieceColor turnColor,
+                     boolean castleRightsWhiteK, boolean castleRightsWhiteQ, boolean castleRightsBlackK, boolean castleRightsBlackQ) {
         this.pieces = pieces;
         this.turnColor = turnColor;
+        this.castleRightsWhiteK = castleRightsWhiteK;
+        this.castleRightsWhiteQ = castleRightsWhiteQ;
+        this.castleRightsBlackK = castleRightsBlackK;
+        this.castleRightsBlackQ = castleRightsBlackQ;
     }
 
 
@@ -51,17 +60,10 @@ public class GameState {
             .anyMatch(legalMove -> newBoardPosition.equals(legalMove));
 
         if(moveIsLegal){
-            //handle takes piece
-            Piece pieceAtNewPosition = getPieceAtPosition(newBoardPosition);
-            if(pieceAtNewPosition != null){
-                pieces.remove(pieceAtNewPosition);
-            }
-
-            //set new position of piece
-            piece.setBoardPosition(newBoardPosition);
+            //move
+            hardMovePiece(piece, newBoardPosition);
 
             return true;
-
         }else{
             return false;
         }      
@@ -76,9 +78,66 @@ public class GameState {
             pieces.remove(pieceAtNewPosition);
         }
 
+        //handle pawn at end
+        if(piece.getPieceType() == PieceType.PAWN){
+            if((piece.getPieceColor() == PieceColor.BLACK && newBoardPosition.getBoardY() == 0)
+                    || (piece.getPieceColor() == PieceColor.WHITE && newBoardPosition.getBoardY() == ROW_COUNT-1)){
+                piece.setPieceType(PieceType.QUEEN);
+            }
+        }
+
+        //handle castling
+        if(piece.getPieceType() == PieceType.KING){
+            if(Math.abs(piece.getBoardX() - newBoardPosition.getBoardX()) == 2){
+                if(piece.getBoardX() - newBoardPosition.getBoardX() > 0){
+                    Piece rookPiece = getPieceAtPosition(new BoardPosition(0, newBoardPosition.getBoardY()));
+                    rookPiece.setBoardPosition(new BoardPosition(3, newBoardPosition.getBoardY()));
+                }else{
+                    Piece rookPiece = getPieceAtPosition(new BoardPosition(7, newBoardPosition.getBoardY()));
+                    rookPiece.setBoardPosition(new BoardPosition(5, newBoardPosition.getBoardY()));
+                }
+            }
+        }
+
+        //handle setting castling rights
+        if(piece.getPieceType() == PieceType.KING){
+            if(piece.getPieceColor() == PieceColor.BLACK){
+                castleRightsBlackK = false;
+                castleRightsBlackQ = false;
+            }else if(piece.getPieceColor() == PieceColor.WHITE){
+                castleRightsWhiteK = false;
+                castleRightsWhiteQ = false;
+            }
+        }
+
+        if(piece.getPieceType() == PieceType.ROOK){
+            if(piece.getPieceColor() == PieceColor.BLACK){
+                if(piece.getBoardX() == 0) castleRightsBlackQ = false;
+                if(piece.getBoardX() == 7) castleRightsBlackK = false;
+            }else if(piece.getPieceColor() == PieceColor.WHITE){
+                if(piece.getBoardX() == 0) castleRightsWhiteQ = false;
+                if(piece.getBoardX() == 7) castleRightsWhiteK = false;
+            }
+        }
+
+
         //set new position of piece
         piece.setBoardPosition(newBoardPosition);
     }
 
+    public boolean isCastleRightsWhiteK() {
+        return castleRightsWhiteK;
+    }
 
+    public boolean isCastleRightsWhiteQ() {
+        return castleRightsWhiteQ;
+    }
+
+    public boolean isCastleRightsBlackK() {
+        return castleRightsBlackK;
+    }
+
+    public boolean isCastleRightsBlackQ() {
+        return castleRightsBlackQ;
+    }
 }

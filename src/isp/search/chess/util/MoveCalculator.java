@@ -145,7 +145,7 @@ public class MoveCalculator {
             //KING
             if (piece.getPieceType() == PieceType.KING) {
 
-                BoardPosition[] theoritacalKingMoves = {
+                BoardPosition[] theoreticalKingMoves = {
                         new BoardPosition(piece.getBoardX(), piece.getBoardY() + 1),
                         new BoardPosition(piece.getBoardX() - 1, piece.getBoardY() + 1),
                         new BoardPosition(piece.getBoardX() - 1, piece.getBoardY()),
@@ -157,13 +157,44 @@ public class MoveCalculator {
                 };
 
 
-                List<BoardPosition> possibleKingMoves = Arrays.stream(theoritacalKingMoves)
+                List<BoardPosition> possibleKingMoves = Arrays.stream(theoreticalKingMoves)
                         .filter(tkm -> isSquareOnBoard(tkm.getBoardX(), tkm.getBoardY()))
                         .filter(tkm -> isSquareEmpty(gameState, tkm.getBoardX(), tkm.getBoardY()) || !isSquareFriendly(gameState, tkm.getBoardX(), tkm.getBoardY(), piece.getPieceColor()))
                         .collect(Collectors.toList());
 
                 legalMoves.addAll(possibleKingMoves);
 
+                //castle
+                if(piece.getPieceColor() == PieceColor.BLACK){
+                    if(gameState.isCastleRightsBlackK()){
+                        if(isSquareEmpty(gameState, 5, 7) && isSquareEmpty(gameState, 6, 7)){
+                            if(!canOpponentPiecesSeeSquare(gameState, new BoardPosition(4, 7), piece.getPieceColor())
+                            && !canOpponentPiecesSeeSquare(gameState, new BoardPosition(5, 7), piece.getPieceColor())){
+                                legalMoves.add(new BoardPosition(piece.getBoardX() + 2, piece.getBoardY()));
+                            }
+                        }
+                    }
+                    if(gameState.isCastleRightsBlackQ()){
+                        if(isSquareEmpty(gameState, 3, 7) && isSquareEmpty(gameState, 2, 7) && isSquareEmpty(gameState, 1, 7)) {
+                            if(!canOpponentPiecesSeeSquare(gameState, new BoardPosition(4, 7), piece.getPieceColor())
+                                    && !canOpponentPiecesSeeSquare(gameState, new BoardPosition(3, 7), piece.getPieceColor())
+                                    && !canOpponentPiecesSeeSquare(gameState, new BoardPosition(2, 7), piece.getPieceColor())) {
+                                legalMoves.add(new BoardPosition(piece.getBoardX() - 2, piece.getBoardY()));
+                            }
+                        }
+                    }
+                }else if(piece.getPieceColor() == PieceColor.WHITE){
+                    if(gameState.isCastleRightsWhiteK()){
+                        if(isSquareEmpty(gameState, 5, 0) && isSquareEmpty(gameState, 6, 0)) {
+                            legalMoves.add(new BoardPosition(piece.getBoardX() + 2, piece.getBoardY()));
+                        }
+                    }
+                    if(gameState.isCastleRightsWhiteQ()){
+                        if(isSquareEmpty(gameState, 3, 0) && isSquareEmpty(gameState, 2, 0) && isSquareEmpty(gameState, 1, 0)) {
+                            legalMoves.add(new BoardPosition(piece.getBoardX() - 2, piece.getBoardY()));
+                        }
+                    }
+                }
             }
 
             //QUEEN
@@ -288,6 +319,28 @@ public class MoveCalculator {
         }
 
         return legalMoves;
+    }
+
+
+    private static boolean canOpponentPiecesSeeSquare(GameState gameState, BoardPosition boardPosition, PieceColor ownColor){
+
+
+        AtomicBoolean foundCheck = new AtomicBoolean(false);
+        gameState.getPieces().stream()
+                .filter(p -> p.getPieceColor() != ownColor) //filter opponents
+                .forEach(opponentsPiece -> {
+                    if(foundCheck.get()) return;
+
+                    List<BoardPosition> legalMovesFromOpponent = getLegalMoves(gameState, opponentsPiece, false);
+
+                    foundCheck.set(
+                            legalMovesFromOpponent.stream()
+                                    .anyMatch(opponentLegalMove -> opponentLegalMove.equals(boardPosition))
+                    );
+
+                });
+
+        return foundCheck.get();
     }
 
 }
