@@ -42,13 +42,14 @@ Die Heuristiken sollen die Qualität eines Zuges bewerten. Dafür werden die Zü
 - - Wie viele deiner Figuren können angegriffen werden
 - Initiative
 - - Damit ist gemeint welcher Spieler die Figuren des anderen bedroht egal so von den Positionen her oder Figuren. Wer seinen "Plan" ausführen kann hat die Initiative
+- Maps pro FigurenTyp wo es lieber hinsoll, mit int werten pro Feld 
 
 Wert der Figuren Vorschlag
 - Pawn = 1
 - Bishop/knight = 3
 - rook = 5
 - queen = 9
-- Geben wir dem King überhaupt einen Wert?
+- Falls König tot ist, ist der Wert der anderen Figuren egal. daher prüfen wir nur ob er noch lebt sonst nichts
 
 
 ### Sources
