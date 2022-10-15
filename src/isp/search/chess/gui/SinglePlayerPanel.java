@@ -17,7 +17,7 @@ import java.util.List;
 public class SinglePlayerPanel extends JPanel{
     private static final int BOARD_X = 0;
     private static final int BOARD_Y = 0;
-    public static final int BOARD_SIZE = 1200;
+    public static final int BOARD_SIZE = 1000;
     public static final int ROW_COUNT = 8;
 
     private GameState gameState;
