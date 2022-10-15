@@ -39,7 +39,7 @@ public class GameState {
     }
 
 
-    public boolean movePiece(Piece piece, BoardPosition newBoardPosition){
+    public boolean movePieceWithLegalCheck(Piece piece, BoardPosition newBoardPosition){
 
         //if no piece at piece position return false
         if(piece == null) return false;
@@ -66,6 +66,18 @@ public class GameState {
             return false;
         }      
         
+    }
+
+    public void hardMovePiece(Piece piece, BoardPosition newBoardPosition){
+
+        //handle takes piece
+        Piece pieceAtNewPosition = getPieceAtPosition(newBoardPosition);
+        if(pieceAtNewPosition != null){
+            pieces.remove(pieceAtNewPosition);
+        }
+
+        //set new position of piece
+        piece.setBoardPosition(newBoardPosition);
     }
 
 

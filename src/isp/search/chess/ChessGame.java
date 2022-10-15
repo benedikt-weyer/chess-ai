@@ -34,7 +34,7 @@ public class ChessGame implements UserInputListener{
             Piece pieceAtSelectedTile = gameState.getPieceAtPosition(selectedTile);
             if(pieceAtSelectedTile != null){
                 //check if move is legal
-                gameState.movePiece(pieceAtSelectedTile, pressedTile);
+                gameState.movePieceWithLegalCheck(pieceAtSelectedTile, pressedTile);
             }
 
             selectedTile = pressedTile;

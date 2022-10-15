@@ -9,7 +9,7 @@ import isp.search.chess.enums.PieceColor;
 import isp.search.chess.enums.PieceType;
 
 public class FenLoader {
-    private static int rowCount = 8;
+    private static int ROW_COUNT = 8;
     
     public static GameState loadGameStateFromFenString(String fenString){
 
@@ -17,7 +17,7 @@ public class FenLoader {
 
         String positionString = fenString.split(" ")[0];
         String turnColorChar = fenString.split(" ")[1];
-        String castleRightSring = fenString.split(" ")[2];
+        String castleRightString = fenString.split(" ")[2];
         String turn1 = fenString.split(" ")[3];
         String turn2 = fenString.split(" ")[4];
 
@@ -44,8 +44,8 @@ public class FenLoader {
                     PieceType pieceType = PieceType.getByFenChar(positionChar);
                     PieceColor pieceColor = PieceColor.getByFenChar(positionChar);
 
-                    int boardX = positionPointer % rowCount;
-                    int boardY = 7 - (int) Math.floor((double) positionPointer / rowCount);
+                    int boardX = positionPointer % ROW_COUNT;
+                    int boardY = (ROW_COUNT-1) - (int) Math.floor((double) positionPointer / ROW_COUNT);
 
                     Piece piece = new Piece(new BoardPosition(boardX, boardY), pieceType, pieceColor);
 
@@ -69,4 +69,52 @@ public class FenLoader {
         return gameState;
     }
 
+
+    public static String generateFenStringFromGameState(GameState gameState){
+        String fenString = "";
+
+        short counter = 0;
+        for(int y=ROW_COUNT-1; y>=0; y--){
+            for(int x=0; x<ROW_COUNT; x++){
+
+                Piece piece = gameState.getPieceAtPosition(new BoardPosition(x, y));
+
+                if(piece != null){
+                    if(counter > 0){
+                        fenString += Short.toString(counter);
+                        counter = 0;
+                    }
+
+                    char fenChar = getFenByPiece(piece.getPieceType(), piece.getPieceColor());
+                    fenString += fenChar;
+                }else{
+                    counter++;
+                }
+
+            }
+            //new col
+            if(counter > 0){
+                fenString += Short.toString(counter);
+                counter = 0;
+            }
+            if(y != 0) fenString += '/';
+        }
+
+        return fenString + " w KQkq - 0 1"; //TODO
+    }
+
+
+    private static char getFenByPiece(PieceType pieceType, PieceColor pieceColor){
+
+        switch(pieceType){
+            case ROOK: return pieceColor == PieceColor.WHITE ? 'R' : 'r';
+            case BISHOP: return pieceColor == PieceColor.WHITE ? 'B' : 'b';
+            case KNIGHT: return pieceColor == PieceColor.WHITE ? 'N' : 'n';
+            case PAWN: return pieceColor == PieceColor.WHITE ? 'P' : 'p';
+            case KING: return pieceColor == PieceColor.WHITE ? 'K' : 'k';
+            case QUEEN: return pieceColor == PieceColor.WHITE ? 'Q' : 'q';
+            default: return 0;
+        }
+
+    }
 }
