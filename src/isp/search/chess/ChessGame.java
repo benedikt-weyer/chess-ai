@@ -1,11 +1,14 @@
 package isp.search.chess;
 
+import isp.search.chess.ai.ChessAI;
+import isp.search.chess.enums.PieceColor;
 import isp.search.chess.gui.SingleplayerFrame;
 import isp.search.chess.util.BoardPosition;
 import isp.search.chess.util.FenLoader;
 
 public class ChessGame implements UserInputListener{
     private GameState gameState;
+    private ChessAI chessAI;
     private UserBoardListener userBoardListener;
     private SingleplayerFrame singleplayerFrame;
 
@@ -23,6 +26,11 @@ public class ChessGame implements UserInputListener{
         singleplayerFrame = new SingleplayerFrame();
         singleplayerFrame.renderBoard(gameState, userBoardListener, selectedTile);
         singleplayerFrame.addBoardListener(userBoardListener);
+
+        //init ai
+        this.chessAI = new ChessAI(gameState, PieceColor.WHITE);
+        chessAI.move(); // first move
+        rerender();
     }
 
     @Override
@@ -33,15 +41,38 @@ public class ChessGame implements UserInputListener{
         }else{ //if new tile pressed
             Piece pieceAtSelectedTile = gameState.getPieceAtPosition(selectedTile);
             if(pieceAtSelectedTile != null){
-                //check if move is legal
-                gameState.movePieceWithLegalCheck(pieceAtSelectedTile, pressedTile);
-            }
+                //move player
+                if(!gameState.isGameFinished()) {
+                    boolean moveSuccess = gameState.movePieceWithLegalCheck(pieceAtSelectedTile, pressedTile);
 
-            selectedTile = pressedTile;
+                    if(moveSuccess){
+                        //move ai
+                        if(!gameState.isGameFinished()){
+                            chessAI.move();
+                        }
+
+                        //deselect move indicator
+                        selectedTile = null;
+                    }else{
+                        selectedTile = pressedTile;
+                    }
+                }else{
+                    selectedTile = pressedTile;
+                }
+            }else{
+                selectedTile = pressedTile;
+            }
         }
 
         //rerender
-        singleplayerFrame.renderBoard(gameState, userBoardListener, selectedTile);
+        rerender();
     }
 
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void rerender() {
+        singleplayerFrame.renderBoard(gameState, userBoardListener, selectedTile);
+    }
 }

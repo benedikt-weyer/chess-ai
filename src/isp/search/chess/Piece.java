@@ -46,4 +46,13 @@ public class Piece {
     public int getBoardY() {
         return boardPosition.getBoardY();
     }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "boardPosition=" + boardPosition +
+                ", pieceType=" + pieceType +
+                ", pieceColor=" + pieceColor +
+                '}';
+    }
 }

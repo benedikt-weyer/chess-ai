@@ -11,6 +11,8 @@ public class GameState {
     private List<Piece> pieces;
     private PieceColor turnColor;
     private boolean castleRightsWhiteK, castleRightsWhiteQ, castleRightsBlackK, castleRightsBlackQ;
+    private PieceColor winnerColor;
+    private boolean gameFinished;
 
     private static final short ROW_COUNT = 8;
 
@@ -53,6 +55,12 @@ public class GameState {
         //if no piece at piece position return false
         if(piece == null) return false;
 
+        //return false if not at turn
+        if(piece.getPieceColor() != getTurnColor()) return false;
+
+        //return false if game ended
+        if(this.gameFinished) return false;
+
         //get legal moves
         List<BoardPosition> legalMoves = MoveCalculator.getLegalMoves(this, piece);
         // check if move is legal
@@ -63,7 +71,22 @@ public class GameState {
             //move
             hardMovePiece(piece, newBoardPosition);
 
+
+            //test for check mate
+            int sumOfMoves = getPieces().stream()
+                    .filter(p -> p.getPieceColor() == getTurnColor()) //filter opponents
+                    .map(p -> MoveCalculator.getLegalMoves(this, p).size())
+                    .mapToInt(Integer::intValue)
+                    .sum();
+
+            if(sumOfMoves == 0){
+                //check mate
+                this.winnerColor = (getTurnColor() == PieceColor.BLACK) ? PieceColor.BLACK : PieceColor.WHITE;
+                this.gameFinished = true;
+            }
+
             return true;
+
         }else{
             return false;
         }      
@@ -123,6 +146,12 @@ public class GameState {
 
         //set new position of piece
         piece.setBoardPosition(newBoardPosition);
+
+
+
+
+        //change turn
+        setTurnColor(getTurnColor() == PieceColor.BLACK ? PieceColor.WHITE : PieceColor.BLACK);
     }
 
     public boolean isCastleRightsWhiteK() {
@@ -139,5 +168,13 @@ public class GameState {
 
     public boolean isCastleRightsBlackQ() {
         return castleRightsBlackQ;
+    }
+
+    public PieceColor getWinnerColor() {
+        return winnerColor;
+    }
+
+    public boolean isGameFinished() {
+        return gameFinished;
     }
 }

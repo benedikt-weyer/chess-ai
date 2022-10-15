@@ -47,7 +47,7 @@ public class MoveCalculator {
                         }
 
                         //capture left
-                        if (piece.getBoardX() - 1 > 0) {
+                        if (piece.getBoardX() - 1 >= 0) {
                             if (!isSquareEmpty(gameState, piece.getBoardX() - 1, piece.getBoardY() + 1) && !isSquareFriendly(gameState, piece.getBoardX() - 1, piece.getBoardY() + 1, PieceColor.WHITE)) {
                                 legalMoves.add(new BoardPosition(piece.getBoardX() - 1, piece.getBoardY() + 1));
                             }
@@ -81,7 +81,7 @@ public class MoveCalculator {
                         }
 
                         //capture left
-                        if (piece.getBoardX() - 1 > 0) {
+                        if (piece.getBoardX() - 1 >= 0) {
                             if (!isSquareEmpty(gameState, piece.getBoardX() - 1, piece.getBoardY() - 1) && !isSquareFriendly(gameState, piece.getBoardX() - 1, piece.getBoardY() - 1, PieceColor.BLACK)) {
                                 legalMoves.add(new BoardPosition(piece.getBoardX() - 1, piece.getBoardY() - 1));
                             }
