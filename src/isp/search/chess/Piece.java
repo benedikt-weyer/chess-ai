@@ -6,43 +6,24 @@ import isp.search.chess.enums.PieceType;
 import isp.search.chess.util.BoardPosition;
 
 public class Piece {
-    private int boardX, boardY;
+    private BoardPosition boardPosition;
     private PieceType pieceType;
     private PieceColor pieceColor;
 
 
-    public Piece(int boardX, int boardY, PieceType pieceType, PieceColor pieceColor) {
-        this.boardX = boardX;
-        this.boardY = boardY;
+    public Piece(BoardPosition boardPosition, PieceType pieceType, PieceColor pieceColor) {
+        this.boardPosition = boardPosition;
         this.pieceType = pieceType;
         this.pieceColor = pieceColor;
     }
 
 
-
-    public int getBoardX() {
-        return this.boardX;
+    public BoardPosition getBoardPosition() {
+        return boardPosition;
     }
 
-    public void setBoardX(int boardX) {
-        this.boardX = boardX;
-    }
-
-    public int getBoardY() {
-        return this.boardY;
-    }
-
-    public void setBoardY(int boardY) {
-        this.boardY = boardY;
-    }
-
-    public void setBoardPosition(int boardX, int boardY){
-        this.boardX = boardX;
-        this.boardY = boardY;
-    }
-
-    public void setBoardPosition(BoardPosition newBoardPosition) {
-        setBoardPosition(newBoardPosition.getBoardX(), newBoardPosition.getBoardY());
+    public void setBoardPosition(BoardPosition boardPosition) {
+        this.boardPosition = boardPosition;
     }
 
     public PieceType getPieceType() {
@@ -52,5 +33,13 @@ public class Piece {
     public PieceColor getPieceColor() {
         return this.pieceColor;
     }
-    
+
+
+    public int getBoardX() {
+        return boardPosition.getBoardX();
+    }
+
+    public int getBoardY() {
+        return boardPosition.getBoardY();
+    }
 }

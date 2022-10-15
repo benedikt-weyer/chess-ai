@@ -3,11 +3,10 @@ package isp.search.chess.gui;
 
 import javax.swing.JFrame;
 
-import java.awt.Dimension;
-
 
 import isp.search.chess.GameState;
 import isp.search.chess.UserBoardListener;
+import isp.search.chess.util.BoardPosition;
 
 public class SingleplayerFrame extends JFrame {
     private SinglePlayerPanel singlePlayerPanel;
@@ -16,8 +15,7 @@ public class SingleplayerFrame extends JFrame {
 
 
         setTitle("Singleplayer Frame");
-        setSize(1000, 1000);
-        setPreferredSize(new Dimension(1000, 1000));
+        setSize(1300, 1300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
@@ -34,8 +32,8 @@ public class SingleplayerFrame extends JFrame {
     }
 
 
-    public void renderBoard(GameState gameState, UserBoardListener boardListener){
-        singlePlayerPanel.renderBoard(gameState, boardListener);
+    public void renderBoard(GameState gameState, UserBoardListener boardListener, BoardPosition selectedTile){
+        singlePlayerPanel.renderBoard(gameState, boardListener, selectedTile);
     }
 
     public void addBoardListener(UserBoardListener boardListener){

@@ -14,19 +14,18 @@ import java.util.stream.Collectors;
 public class MoveCalculator {
     private static final int ROW_COUNT = 8;
     
-    public static List<BoardPosition> getLegalMoves(GameState gameState, BoardPosition piecePosition){
+    public static List<BoardPosition> getLegalMoves(GameState gameState, Piece piece){
 
         List<BoardPosition> legalMoves = new ArrayList<>();
-        
-        Piece piece = gameState.getPieceAtPosition(piecePosition);
 
 
         if(piece != null){
+            //PAWN
             if(piece.getPieceType() == PieceType.PAWN){
                 if(piece.getPieceColor() == PieceColor.WHITE){
                     //WHITE PAWNS
                     //if not at end of board
-                    if(piece.getBoardY() < ROW_COUNT-1){                 
+                    if(piece.getBoardY() < ROW_COUNT-1){
 
                         //move 2 forward
                         if(piece.getBoardY() == 1){
@@ -93,7 +92,10 @@ public class MoveCalculator {
 
                     }
                 }
-            }else if(piece.getPieceType() == PieceType.KNIGHT){
+            }
+
+            //KNIGHT
+            if(piece.getPieceType() == PieceType.KNIGHT){
                 BoardPosition[] theoritacalKnightMoves = {
                     new BoardPosition(piece.getBoardX() - 1, piece.getBoardY() + 2),
                     new BoardPosition(piece.getBoardX() + 1, piece.getBoardY() + 2),
@@ -114,21 +116,30 @@ public class MoveCalculator {
                 legalMoves.addAll(possibleKnightMoves);
 
 
-            }else if(piece.getPieceType() == PieceType.ROOK){
+            }
+
+            //ROOK
+            if(piece.getPieceType() == PieceType.ROOK){
 
                 legalMoves.addAll(scanLineForLegalMoves(gameState, piece, 1, 0));
                 legalMoves.addAll(scanLineForLegalMoves(gameState, piece, -1, 0));
                 legalMoves.addAll(scanLineForLegalMoves(gameState, piece, 0, 1));
                 legalMoves.addAll(scanLineForLegalMoves(gameState, piece, 0, -1));
 
-            }else if(piece.getPieceType() == PieceType.BISHOP){
+            }
+
+            //BISHOP
+            if(piece.getPieceType() == PieceType.BISHOP){
 
                 legalMoves.addAll(scanLineForLegalMoves(gameState, piece, 1, 1));
                 legalMoves.addAll(scanLineForLegalMoves(gameState, piece, -1, 1));
                 legalMoves.addAll(scanLineForLegalMoves(gameState, piece, 1, -1));
                 legalMoves.addAll(scanLineForLegalMoves(gameState, piece, -1, -1));
 
-            }else if(piece.getPieceType() == PieceType.KING){
+            }
+
+            //KING
+            if(piece.getPieceType() == PieceType.KING){
 
                 BoardPosition[] theoritacalKingMoves = {
                     new BoardPosition(piece.getBoardX(), piece.getBoardY() + 1),
@@ -149,7 +160,10 @@ public class MoveCalculator {
 
                 legalMoves.addAll(possibleKingMoves);
 
-            }else if(piece.getPieceType() == PieceType.QUEEN){
+            }
+
+            //QUEEN
+            if(piece.getPieceType() == PieceType.QUEEN){
 
                 legalMoves.addAll(scanLineForLegalMoves(gameState, piece, 1, 0));
                 legalMoves.addAll(scanLineForLegalMoves(gameState, piece, -1, 0));
@@ -193,8 +207,8 @@ public class MoveCalculator {
 
     //check if square is not occupied by other piece
     private static boolean isSquareEmpty(GameState gameState, int boardX, int boardY){
-        return gameState.getPieces().stream()
-            .anyMatch(piece -> (piece.getBoardX() == boardX && piece.getBoardY() == boardY));
+        return !gameState.getPieces().stream()
+            .anyMatch(piece -> (piece.getBoardPosition().equals(new BoardPosition(boardX, boardY))));
     }
 
     //check if square has a piece with the same color as given

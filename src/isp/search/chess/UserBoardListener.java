@@ -8,15 +8,11 @@ import isp.search.chess.gui.SinglePlayerPanel;
 import isp.search.chess.util.BoardPosition;
 
 public class UserBoardListener implements MouseInputListener{
-    private BoardPosition selectedTile = null;
+
     private UserInputListener callback;
     
     public UserBoardListener(UserInputListener callback){
         this.callback = callback;
-    }
-
-    public void register(UserInputListener userInputListenerCallback) {
-        //userInputListenerCallback.methodToCallBack();
     }
 
 
@@ -29,18 +25,14 @@ public class UserBoardListener implements MouseInputListener{
     @Override
     public void mousePressed(MouseEvent e) {
 
+        //calculate board position
         int boardX = (int) Math.floor(1.0f * e.getX() / SinglePlayerPanel.BOARD_SIZE * SinglePlayerPanel.ROW_COUNT);
         int boardY = (int) Math.floor(1.0f * e.getY() / SinglePlayerPanel.BOARD_SIZE * SinglePlayerPanel.ROW_COUNT);
 
-        BoardPosition boardPosition = new BoardPosition(boardX, boardY);
+        BoardPosition pressedBoardPosition = new BoardPosition(boardX, boardY);
 
-        if(selectedTile == boardPosition){
-            selectedTile = null;
-        }else{
-            selectedTile = boardPosition;
-        }
 
-        callback.onTileSelectionChange(selectedTile);
+        callback.onTilePressed(pressedBoardPosition);
     }
 
     @Override
@@ -73,8 +65,4 @@ public class UserBoardListener implements MouseInputListener{
         
     }
 
-
-    public BoardPosition getSelectedTile(){
-        return selectedTile;
-    }
 }

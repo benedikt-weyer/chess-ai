@@ -9,24 +9,39 @@ public class ChessGame implements UserInputListener{
     private UserBoardListener userBoardListener;
     private SingleplayerFrame singleplayerFrame;
 
+    private BoardPosition selectedTile = null;
+
     public ChessGame(String fenString) {
         
         //load game state
         this.gameState = FenLoader.loadGameStateFromFenString(fenString);
 
-        //init user controlls
+        //init user controls
         this.userBoardListener = new UserBoardListener(this);
 
 
         singleplayerFrame = new SingleplayerFrame();
-        singleplayerFrame.renderBoard(gameState, userBoardListener);
+        singleplayerFrame.renderBoard(gameState, userBoardListener, selectedTile);
         singleplayerFrame.addBoardListener(userBoardListener);
     }
 
     @Override
-    public void onTileSelectionChange(BoardPosition boardPosition) {
+    public void onTilePressed(BoardPosition pressedTile) {
 
-        singleplayerFrame.renderBoard(gameState, userBoardListener);
+        if(selectedTile != null && selectedTile.equals(pressedTile)){
+            selectedTile = null;
+        }else{ //if new tile pressed
+            Piece pieceAtSelectedTile = gameState.getPieceAtPosition(selectedTile);
+            if(pieceAtSelectedTile != null){
+                //check if move is legal
+                gameState.movePiece(pieceAtSelectedTile, pressedTile);
+            }
+
+            selectedTile = pressedTile;
+        }
+
+        //rerender
+        singleplayerFrame.renderBoard(gameState, userBoardListener, selectedTile);
     }
 
 }

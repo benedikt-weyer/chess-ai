@@ -4,5 +4,6 @@ import isp.search.chess.util.BoardPosition;
 
 public interface UserInputListener {
 
-    void onTileSelectionChange(BoardPosition boardPosition);
+    void onTilePressed(BoardPosition pressedTile);
+
 }

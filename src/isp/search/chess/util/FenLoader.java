@@ -45,9 +45,9 @@ public class FenLoader {
                     PieceColor pieceColor = PieceColor.getByFenChar(positionChar);
 
                     int boardX = positionPointer % rowCount;
-                    int boardY = (int) Math.floor((double) positionPointer / rowCount);
+                    int boardY = 7 - (int) Math.floor((double) positionPointer / rowCount);
 
-                    Piece piece = new Piece(boardX, boardY, pieceType, pieceColor);
+                    Piece piece = new Piece(new BoardPosition(boardX, boardY), pieceType, pieceColor);
 
                     //add piece
                     pieces.add(piece);

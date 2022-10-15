@@ -33,20 +33,19 @@ public class GameState {
 
     public Piece getPieceAtPosition(BoardPosition boardPosition){
         return pieces.stream()
-            .filter(piece -> (piece.getBoardX() == boardPosition.getBoardX() && piece.getBoardY() == boardPosition.getBoardY()))
+            .filter(piece -> piece.getBoardPosition().equals(boardPosition))
             .findFirst()
             .orElse(null);
     }
 
 
-    public boolean movePiece(BoardPosition piecePosition, BoardPosition newBoardPosition){
+    public boolean movePiece(Piece piece, BoardPosition newBoardPosition){
 
-        Piece piece = getPieceAtPosition(piecePosition);
         //if no piece at piece position return false
         if(piece == null) return false;
 
         //get legal moves
-        List<BoardPosition> legalMoves = MoveCalculator.getLegalMoves(this, piecePosition);
+        List<BoardPosition> legalMoves = MoveCalculator.getLegalMoves(this, piece);
         // check if move is legal
         boolean moveIsLegal = legalMoves.stream()
             .anyMatch(legalMove -> newBoardPosition.equals(legalMove));
