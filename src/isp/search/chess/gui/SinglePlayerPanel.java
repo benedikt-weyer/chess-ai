@@ -36,18 +36,19 @@ public class SinglePlayerPanel extends JPanel{
     protected void paintComponent(Graphics g){
         //setup
         Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHints(new RenderingHints(
+        g2.setRenderingHint(
             RenderingHints.KEY_TEXT_ANTIALIASING,
             RenderingHints.VALUE_TEXT_ANTIALIAS_ON
-        ));
-        g2.setRenderingHints(new RenderingHints(
+        );
+        g2.setRenderingHint(
             RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON
-        ));
-        g2.setRenderingHints(new RenderingHints(
+        );
+        g2.setRenderingHint(
             RenderingHints.KEY_INTERPOLATION,
             RenderingHints.VALUE_INTERPOLATION_BILINEAR
-        ));
+        );
+
 
 
         //calculate move indicators
@@ -61,8 +62,10 @@ public class SinglePlayerPanel extends JPanel{
         //loop over every square
         for(int x=0; x<ROW_COUNT; x++){
             for(int y=0; y<ROW_COUNT; y++){
-                BoardPosition currentBoardPosition = new BoardPosition(x, y);
                 final int tileSize = BOARD_SIZE/ROW_COUNT;
+
+                BoardPosition currentBoardPosition = new BoardPosition(x, y);
+                Piece currentPiece = gameState.getPieceAtPosition(currentBoardPosition);
 
                 //draw squares
 
@@ -75,9 +78,22 @@ public class SinglePlayerPanel extends JPanel{
                 g2.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
 
 
-                //draw pieces
-                Piece currentPiece = gameState.getPieceAtPosition(currentBoardPosition);
+                //draw move indicators
+                if(moveIndicatorPositions.contains(currentBoardPosition)){
 
+                    if(currentPiece == null) {
+                        final short indicatorRadius = tileSize / 2 / 5;
+                        g2.setColor(new Color(150, 165, 170));
+                        g2.fillOval(x * tileSize + tileSize / 2 - indicatorRadius, y * tileSize + tileSize / 2 - indicatorRadius,
+                                indicatorRadius * 2, indicatorRadius * 2);
+                    }else{
+                        g2.setColor(new Color(200, 165, 170));
+                        g2.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                    }
+                }
+
+
+                //draw pieces
                 if(currentPiece != null){
                     Rectangle pieceBounds = ChessPieceImageHelper.getBoundsByPiece(currentPiece.getPieceType(), currentPiece.getPieceColor());
 
@@ -86,13 +102,7 @@ public class SinglePlayerPanel extends JPanel{
                 }
 
 
-                //draw move indicators
-                if(moveIndicatorPositions.contains(currentBoardPosition)){
-                    final short indicatorRadius = 20;
-                    g2.setColor(new Color(150, 165, 170));
-                    g2.fillOval(x * tileSize + tileSize/2 - indicatorRadius, y * tileSize + tileSize/2 - indicatorRadius,
-                            indicatorRadius*2, indicatorRadius*2);
-                }
+
 
             }
         }

@@ -81,8 +81,10 @@ public class GameState {
 
             if(sumOfMoves == 0){
                 //check mate
-                this.winnerColor = (getTurnColor() == PieceColor.BLACK) ? PieceColor.BLACK : PieceColor.WHITE;
+                this.winnerColor = (getTurnColor() == PieceColor.BLACK) ? PieceColor.WHITE : PieceColor.BLACK;
                 this.gameFinished = true;
+
+                System.out.println(this.winnerColor + " Won!");
             }
 
             return true;
