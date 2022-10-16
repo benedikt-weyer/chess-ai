@@ -62,7 +62,13 @@ Die Heuristiken sollen die Qualität eines Zuges bewerten. Dafür werden die Zü
 daher Alpha Beta Pruning evtl.
 ![](./rsc/2022-10-16%2012_50_08-Window.png)
 
-
+### 3. und 4. also Implementieren und testen der Heuristiken
+Wir haben mit den einfachsten Heursitiken angefangen, also wie viele Schachfiguren von und - wie viele Figuren vom Gegner 
+noch stehen.
+Weiß hat dabei mit der Heuristik gespielt und mit einer Depth von 1 geschaut was am meisten Sinn macht.
+Schwarz hat mit der Random Schach AI gespielt. Oft konnte Weiß gewinnen aber meist kam es zu einem Unentschieden, da Weiß mit einer
+tiefensuche bis depth = 1 nicht besonders weit in die Zukunft schauen konnte und daher auch nicht das Schachmatt erzwingen konnte.
+Mit einer Tiefe von 2 war der Algorithmus sehr langsam.
 ## Sources
 https://www.quora.com/What-are-some-heuristics-for-quickly-evaluating-chess-positions \
 https://www.youtube.com/watch?v=hCbfTm-b6iM \
