@@ -23,36 +23,36 @@ Die Anzahl der Züge die berechnet werden, beschränken sich auf 3, damit wird s
 ## 1. Überlegen von geeigneten Heuristiken
 
 Die Heuristiken sollen die Qualität eines Zuges bewerten. Dafür werden die Züge in verschiedene Kategorien eingeteilt. Die Kategorien sind:
-- Wert der Figuren
-- - Aus allen berechneten Zuständen den wo wir noch am meisten "Wert" haben
-- - Aus allen berechneten Zuständen den wo der Gegner am wenigsten "Wert" hat
-- Möglichkeiten des Gegners
--  - Wenige von unseren Figuren zu schlagen?
-- Position der Figuren
-- - Wenn ich keinen Unterschied zwischen den Positionen meiner und der Figuren meines Gegners sehe ist das Spiel ausgegeglichen
-- Mattgefahr
-- Mattgefahr des Gegners
-- Figurenanzahl
-- - Der Zustand wird ausgewählt bei dem wir am meisten Figuren haben
-- - Der Zustand wird ausgewählt, wo der Gegner am wenigsten Figuren hat
-- - Alg wer hat weniger Figuren übrig?
-- Platz
-- - Welche Seite beansprucht mehr Felder (hinter sich)
-- - Wie viele Squares werden von deinen Figuren gehalten also können angegriffen werden?
-- - Wie viele deiner Figuren können angegriffen werden
-- Initiative
-- - Damit ist gemeint welcher Spieler die Figuren des anderen bedroht egal so von den Positionen her oder Figuren. Wer seinen "Plan" ausführen kann hat die Initiative
-- Maps pro FigurenTyp wo es lieber hinsoll, mit int werten pro Feld 
-- Gesamtanzahl der Figuren
-- - Anzahl der eigenen Figuren - Anzahl der gegnerischen Figuren (wenn negativ dann ist der Gegner im Vorteil)
+1. Gesamtanzahl der Figuren
+   - Der Zustand wird ausgewählt bei dem wir am meisten Figuren haben
+   - Der Zustand wird ausgewählt, wo der Gegner am wenigsten Figuren hat
+   - Alg wer hat weniger Figuren übrig?
+   - Anzahl der eigenen Figuren - Anzahl der gegnerischen Figuren (wenn negativ dann ist der Gegner im Vorteil)
+2. Wert der Figuren
+   - Aus allen berechneten Zuständen den wo wir noch am meisten "Wert" haben
+   - Aus allen berechneten Zuständen den wo der Gegner am wenigsten "Wert" hat
+3. Möglichkeiten des Gegners
+   - Wenige von unseren Figuren zu schlagen?
+4. Position der Figuren
+  - Wenn ich keinen Unterschied zwischen den Positionen meiner und der Figuren meines Gegners sehe ist das Spiel ausgegeglichen
+5. Mattgefahr 
+6. Mattgefahr des Gegners 
+7. Platz
+   - Welche Seite beansprucht mehr Felder (hinter sich)
+   - Wie viele Squares werden von deinen Figuren gehalten also können angegriffen werden?
+   - Wie viele deiner Figuren können angegriffen werden
+8. Initiative
+   - Damit ist gemeint welcher Spieler die Figuren des anderen bedroht egal so von den Positionen her oder Figuren. Wer seinen "Plan" ausführen kann hat die Initiative
+9. Maps pro FigurenTyp wo es lieber hinsoll, mit int werten pro Feld
 
-Wert der Figuren Vorschlag
+### Vorschlag für den Wert der Figuren:
 - Pawn = 1
 - Bishop/knight = 3
 - rook = 5
 - queen = 9
 - Falls König tot ist, ist der Wert der anderen Figuren egal. daher prüfen wir nur, ob er noch lebt sonst nichts
 
+### Pruning:
 - MinMax ist nicht machbar im Schach, da zu viele möglichkeiten abgewägt werden würden
 daher Alpha Beta Pruning evtl.
 ![](../../Desktop/2022-10-16 12_07_41-Window.png)
