@@ -65,7 +65,18 @@ public class Evaluator {
     }
 
 
-    public static double benediktsEvaluator(GameState currentGameState){
+    public static double evaluatorV1(GameState currentGameState){
+
+        double staticEvaluation = evaluatePiecesByStaticValue(currentGameState);
+        double checkmateEvaluation = checkmateEvaluator(currentGameState);
+
+
+        return 1 * staticEvaluation + checkmateEvaluation;
+
+    }
+
+
+    public static double evaluatorV2(GameState currentGameState){
 
         double staticEvaluation = evaluatePiecesByStaticValue(currentGameState);
         double relativeMovePossibilitiesEvaluation = relativeMovePossibilitiesEvaluator(currentGameState);

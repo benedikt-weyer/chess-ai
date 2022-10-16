@@ -45,8 +45,8 @@ public class ChessAIEvaluator extends ChessAI{
 
             clonedGameState.movePieceWithLegalCheck(clonedGameState.getPieceAtPosition(legalMove.getOldBoardPosition()), legalMove.getNewBoardPosition());
 
-
-            double evalOfMove = alphaBetaPruning.pruning_min(clonedGameState, this.pieceColor, this.depth, -Double.MAX_VALUE, Double.MAX_VALUE);
+            System.out.println(bestMoveEval);
+            double evalOfMove = alphaBetaPruning.pruning_min(clonedGameState, this.pieceColor, this.depth, bestMoveEval, Double.MAX_VALUE);
 
             System.out.println(String.format("Move for %s: %s with eval of %s", this.pieceColor, legalMove, evalOfMove));
 

@@ -47,7 +47,7 @@ public class AlphaBetaPruning {
     }
 
     public double pruning_min(GameState currentGameState, PieceColor pieceColor, int depth, double alpha, double beta) {
-        if(depth == 0) return pieceColor == PieceColor.WHITE ? evaluationFunction.apply(currentGameState) : -evaluationFunction.apply(currentGameState);
+        if(depth == 0) return pieceColor == PieceColor.WHITE ? -evaluationFunction.apply(currentGameState) : evaluationFunction.apply(currentGameState);
 
         List<Move> allLegalMoves = MoveCalculator.getAllLegalMoves(currentGameState, currentGameState.getTurnColor()); // TODO PieceColor.WHITE
         for(Move legalMove : allLegalMoves) {
