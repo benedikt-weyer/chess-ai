@@ -19,7 +19,7 @@ Diese Aufgabe wurde von allen drei Gruppenmitgliedern geteilt und gemeinsam bear
 ### 2. Implementieren eines Schachprogramms
 Dies wurde hauptsächlich von Benni durchgeführt. Er hat das Schachprogramm überwiegend alleine geschrieben, da er größere Erfahrung mit Schach hat.
 ### 3. Implementieren der Heuristiken
-Diese Aufgabe wurde von allen drei Gruppenmitgliedern geteilt und gemeinsam bearbeitet.
+Diese Aufgabe wurde von allen drei Gruppenmitgliedern geteilt und gemeinsam bearbeitet. überwiegend wurde hier mit pair programming gearbeitet.
 ### 4. Testen der Heuristiken
 Die Heuristiken wurden von allen drei Gruppenmitgliedern getestet. 
 ### 5. Vergleichen der Heuristiken
@@ -69,6 +69,10 @@ Weiß hat dabei mit der Heuristik gespielt und mit einer Depth von 1 geschaut wa
 Schwarz hat mit der Random Schach AI gespielt. Oft konnte Weiß gewinnen aber meist kam es zu einem Unentschieden, da Weiß mit einer
 tiefensuche bis depth = 1 nicht besonders weit in die Zukunft schauen konnte und daher auch nicht das Schachmatt erzwingen konnte.
 Mit einer Tiefe von 2 war der Algorithmus sehr langsam.
+#### Probleme:
+Auch wenn die Heuristik sehr einfach ist, ist die Implementierung schwerer gewesen als gedacht. Die KI hat trotz
+logisch korrekter Implementierung nicht immer das richtige Ergebnis geliefert. Zwar wurde der richtige Zug aus der Berechnung gefunden, aber
+die Berechnung selbst schien nicht korrekt zu sein. Nach längerer Suche haben wir herausgefunden, dass die Berechnung nicht korrekt war, da ...
 ## Sources
 https://www.quora.com/What-are-some-heuristics-for-quickly-evaluating-chess-positions \
 https://www.youtube.com/watch?v=hCbfTm-b6iM \
