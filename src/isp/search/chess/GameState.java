@@ -113,6 +113,19 @@ public class GameState {
         //handle takes piece
         Piece pieceAtNewPosition = getPieceAtPosition(newBoardPosition);
         if(pieceAtNewPosition != null){
+
+            //handle setting castling rights
+            if(pieceAtNewPosition.getPieceType() == PieceType.ROOK){
+                if(pieceAtNewPosition.getPieceColor() == PieceColor.BLACK){
+                    if(pieceAtNewPosition.getBoardX() == 0) castleRightsBlackQ = false;
+                    if(pieceAtNewPosition.getBoardX() == 7) castleRightsBlackK = false;
+                }else if(pieceAtNewPosition.getPieceColor() == PieceColor.WHITE){
+                    if(pieceAtNewPosition.getBoardX() == 0) castleRightsWhiteQ = false;
+                    if(pieceAtNewPosition.getBoardX() == 7) castleRightsWhiteK = false;
+                }
+            }
+
+            //remove piece
             pieces.remove(pieceAtNewPosition);
         }
 

@@ -17,25 +17,6 @@ public class ChessAIEvaluator extends ChessAI{
         super(chessGame, pieceColor);
     }
 
-    /*
-     * Diese Methode errechnet die Bewertung der Spielsituation.
-     * Die Berechnung basiert auf der einfachsten Heuristik, die nur die Anzahl der Figuren auf dem Brett berücksichtigt.
-     */
-
-
-
-    /*
-     * Diese Methode bewertet die Spielsituation und gibt die Bewertung zurück.
-     */
-    public void printEvaluation() {
-        /*if (evaluate() > 0) {
-            System.out.println(pieceColor + "has an advantage by" + evaluate() + " pieces.");
-        } else if (evaluate() < 0) {
-            System.out.println(pieceColor + "is at a disadvantage by" + evaluate() + " pieces.");
-        } else {
-            System.out.println("The game is balanced.");
-        }*/
-    }
 
     @Override
     public void move() {
@@ -43,9 +24,9 @@ public class ChessAIEvaluator extends ChessAI{
         GameState currentGameState = chessGame.getGameState();
 
         //new Alpha Beta Pruning with eval method
-        AlphaBetaPruning alphaBetaPruning = new AlphaBetaPruning(Evaluator::evaluatePieceCount);
+        AlphaBetaPruning alphaBetaPruning = new AlphaBetaPruning(Evaluator::benediktsEvaluator);
 
-        List<Move> allLegalMoves = MoveCalculator.getAllLegalMoves(currentGameState, this.pieceColor); // TODO PieceColor.WHITE
+        List<Move> allLegalMoves = MoveCalculator.getAllLegalMoves(currentGameState, this.pieceColor);
         Move bestMove = null;
         double bestMoveEval = -Double.MAX_VALUE;
 
@@ -58,17 +39,21 @@ public class ChessAIEvaluator extends ChessAI{
             clonedGameState.movePieceWithLegalCheck(clonedGameState.getPieceAtPosition(legalMove.getOldBoardPosition()), legalMove.getNewBoardPosition());
 
             //System.out.println(-Double.MAX_VALUE >= 0);
-            double evalOfMove = alphaBetaPruning.pruning_max(clonedGameState, this.pieceColor, 1, -Double.MAX_VALUE, Double.MAX_VALUE);
+            int depth = 1;
+            double evalOfMove = alphaBetaPruning.pruning_min(clonedGameState, this.pieceColor, depth, -Double.MAX_VALUE, Double.MAX_VALUE);
+
+            //System.out.println(String.format("Move for %s: %s with eval of %s", this.pieceColor, legalMove, evalOfMove));
 
             if(evalOfMove >= bestMoveEval){
                 bestMove = legalMove;
                 bestMoveEval = evalOfMove;
-                System.out.println(String.format("Best Move: %s with eval of %s", legalMove, evalOfMove));
+
             }
 
-            //System.out.println(String.format("Move: %s with eval of %s", legalMove, evalOfMove));
         }
 
+        System.out.println(String.format("Best Move for %s: %s with eval of %s", this.pieceColor, bestMove, bestMoveEval));
+        System.out.println("------------------------------------");
 
         //move best move
         currentGameState.movePieceWithLegalCheck(currentGameState.getPieceAtPosition(bestMove.getOldBoardPosition()), bestMove.getNewBoardPosition());

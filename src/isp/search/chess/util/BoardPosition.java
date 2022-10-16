@@ -50,10 +50,7 @@ public class BoardPosition {
 
     @Override
     public String toString() {
-        return "{" +
-            " boardX='" + getBoardX() + "'" +
-            ", boardY='" + getBoardY() + "'" +
-            "}";
+        return ((char) (getBoardX() + 'a')) + "" + (getBoardY()+1);
     }
     
 
