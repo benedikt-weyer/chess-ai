@@ -59,7 +59,7 @@ Die Heuristiken sollen die Qualität eines Zuges bewerten. Dafür werden die Zü
 
 ### Pruning:
 - MinMax ist nicht machbar im Schach, da zu viele möglichkeiten abgewägt werden würden
-daher Alpha Beta Pruning evtl.
+daher wäre Alpha Beta Pruning eine Möglichkeit, die man testen kann.
 ![](./rsc/2022-10-16%2012_50_08-Window.png)
 
 ### 3. und 4. also Implementieren und testen der Heuristiken
@@ -69,6 +69,17 @@ Weiß hat dabei mit der Heuristik gespielt und mit einer Depth von 1 geschaut wa
 Schwarz hat mit der Random Schach AI gespielt. Oft konnte Weiß gewinnen aber meist kam es zu einem Unentschieden, da Weiß mit einer
 tiefensuche bis depth = 1 nicht besonders weit in die Zukunft schauen konnte und daher auch nicht das Schachmatt erzwingen konnte.
 Mit einer Tiefe von 2 war der Algorithmus sehr langsam.
+Getestet haben wir die Heuristiken indem wir entweder selber gegen die AI gespielt haben oder die AI gegeneinander gespielt haben. Mit Hilfe von
+Konsolenausgaben haben wir zusätzlich die Berechnung der Schritte überprüfen können, um zu sehen, ob der richtige Zug berechnet wurde. So konnten wir auch vergleichen,
+ob der Zug tatsächlich mit dem übereinstimmt, der von der Heuristik berechnet werden sollte.
+
+### 5. Vergleichen der Heuristiken
+Die zufälligen Züge von RandomAI waren wie erwartet nicht wirklich gut, führten aber zu interessanten Spielen. 
+ChessAI FirstMove war eigentlich nur zum Testen gedacht, da er immer den ersten Zug macht, der ihm in den Sinn kommt. Im Vergleich mit RandomAI war somit schlechter.
+ChessAIEval war der erste Algorithmus, der eine Heuristik benutzte. Er war somit zwar besser als die anderen, aber nicht in dem Maße, wie wir es uns erhofft hatten. (Es wurden immer noch Züge gemacht, die nicht wirklich Sinn gemacht haben, bzw.
+unnötig Figuren geopfert haben). Zusätzlich wurde er mit zunehmender Tiefe immer langsamer, das war zwar zu erwarten, dass es bei einer Tiefe von 2 schon nicht mehr zu einem Ende kommt war aber nicht so gut.
+Aufgrund der schlechten Ergebnisse haben wir uns entschieden, dass wir pruning verwenden wollen. Wir haben uns für Alpha Beta Pruning entschieden, da es die einzige uns bekannte Pruning Methode ist, die auch für Schach funktioniert.
+Das Pruning hat leider auch keine großen Verbesserungen gebracht, was wir an dieser Stelle mit der geringen Suchtiefe erklären können, sowie eine ggf. fehlerhafte Implementierung.
 
 #### Probleme:
 Auch wenn die Heuristik sehr einfach ist, ist die Implementierung schwerer gewesen als gedacht. Die KI hat trotz
