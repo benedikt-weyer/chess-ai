@@ -11,13 +11,10 @@ import java.util.List;
 /**
  * Macht immer den erstmöglichen Zug, einfach um Dinge zu testen, da Spielzüge des Gegners einfach vorausschaubar sind.
  */
-public class ChessAIFirstMove implements ChessAI {
-    private GameState gameState;
-    private PieceColor pieceColor;
+public class ChessAIFirstMove extends ChessAI {
 
     public ChessAIFirstMove(GameState gameState, PieceColor pieceColor) {
-        this.gameState = gameState;
-        this.pieceColor = pieceColor;
+       super(gameState,pieceColor);
     }
 
     public void move() {

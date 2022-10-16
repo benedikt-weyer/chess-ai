@@ -1,8 +1,8 @@
 package isp.search.chess;
 
+import isp.search.chess.ai.AlphaBetaPruning;
 import isp.search.chess.ai.ChessAI;
 import isp.search.chess.ai.ChessAIFirstMove;
-import isp.search.chess.ai.ChessAIRandom;
 import isp.search.chess.enums.PieceColor;
 import isp.search.chess.gui.SingleplayerFrame;
 import isp.search.chess.util.BoardPosition;

@@ -9,13 +9,10 @@ import isp.search.chess.util.MoveCalculator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class ChessAIRandom implements ChessAI {
-    private GameState gameState;
-    private PieceColor pieceColor;
+public class ChessAIRandom extends ChessAI {
 
     public ChessAIRandom(GameState gameState, PieceColor pieceColor) {
-        this.gameState = gameState;
-        this.pieceColor = pieceColor;
+        super(gameState,pieceColor);
     }
 
 

@@ -51,7 +51,9 @@ Wert der Figuren Vorschlag
 - queen = 9
 - Falls König tot ist, ist der Wert der anderen Figuren egal. daher prüfen wir nur ob er noch lebt sonst nichts
 
-
+- MinMax ist nicht machbar im Schach, da zu viele möglichkeiten abgewägt werden würden
+daher Alpha Beta Pruning evtl.
+![](../../Desktop/2022-10-16 12_07_41-Window.png)
 ### Sources
 https://www.quora.com/What-are-some-heuristics-for-quickly-evaluating-chess-positions
 https://www.youtube.com/watch?v=hCbfTm-b6iM
