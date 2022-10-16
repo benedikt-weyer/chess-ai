@@ -2,6 +2,7 @@ package isp.search.chess;
 
 
 import isp.search.chess.ai.ChessAI;
+import isp.search.chess.ai.ChessAIEvaluator;
 import isp.search.chess.ai.ChessAIRandom;
 import isp.search.chess.enums.PieceColor;
 
@@ -12,7 +13,7 @@ public class App {
 
         ChessGame chessGame = new ChessGame(fenStringStartingPosition);
 
-        ChessAI randomChessAI = new ChessAIRandom(chessGame, PieceColor.WHITE);
+        ChessAI randomChessAI = new ChessAIEvaluator(chessGame, PieceColor.WHITE);
 
         ChessAI randomChessAI2 = new ChessAIRandom(chessGame, PieceColor.BLACK);
 

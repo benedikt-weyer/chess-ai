@@ -3,32 +3,64 @@ package isp.search.chess.ai;
 import isp.search.chess.GameState;
 import isp.search.chess.enums.PieceColor;
 import isp.search.chess.util.BoardPosition;
+import isp.search.chess.util.FenLoader;
+import isp.search.chess.util.Move;
+import isp.search.chess.util.MoveCalculator;
 
-public interface AlphaBetaPruning {
+import java.util.List;
+import java.util.function.Function;
+
+public class AlphaBetaPruning {
+
+    private Function<GameState, Double> evaluationFunction;
+
+    //private GameState initGameState;
+
+    public AlphaBetaPruning(Function<GameState, Double> evaluationFunction){
+        this.evaluationFunction = evaluationFunction;
+        //this.initGameState = initGameState;
+    }
+
     // Aufgerufen durch pruning_max(jetzigerSpielstand, wieTief?,Farbe, -unendlich,unendlich)
-    default int pruning_max(GameState gameState, int depth, PieceColor pieceColor, int alpha, int beta) {
-        if (depth == 0) {
-            //return eval(); hier muss ne berechnungsmethode rein wonach wir bewerten
-        }
-        for(/* mal schauen*/) {
-            alpha = Math.max(alpha,pruning_min(,depth,pieceColor,alpha,beta));
+    public double pruning_max(GameState currentGameState, PieceColor pieceColor, int depth, double alpha, double beta) {
+        if(depth == 0) return pieceColor == PieceColor.WHITE ? evaluationFunction.apply(currentGameState) : -evaluationFunction.apply(currentGameState);
 
-            if(alpha >=beta) {
-                return alpha;
+        List<Move> allLegalMoves = MoveCalculator.getAllLegalMoves(currentGameState, PieceColor.WHITE); // TODO PieceColor.WHITE
+        for(Move legalMove : allLegalMoves) {
+
+            //clone gameState and move
+            String currentGameFenString = FenLoader.generateFenStringFromGameState(currentGameState);
+            GameState clonedGameState = FenLoader.loadGameStateFromFenString(currentGameFenString);
+
+            clonedGameState.movePieceWithLegalCheck(clonedGameState.getPieceAtPosition(legalMove.getOldBoardPosition()), legalMove.getNewBoardPosition());
+
+
+            double newAlpha = Math.max(alpha, pruning_min(clonedGameState, pieceColor, depth - 1, alpha, beta));
+
+            if(newAlpha >= beta) {
+                return newAlpha;
             }
         }
+
         return alpha;
     }
 
-    default int pruning_min(BoardPosition boardPosition, int depth, PieceColor pieceColor, int alpha, int beta) {
-        if (depth == 0) {
-            //return eval(); hier muss ne berechnungsmethode rein wonach wir bewerten
-        }
-        for(/* mal schauen*/) {
-            beta = Math.min(beta,pruning_max(,depth,pieceColor,alpha,beta));
+    public double pruning_min(GameState currentGameState, PieceColor pieceColor, int depth, double alpha, double beta) {
+        if(depth == 0) return pieceColor == PieceColor.WHITE ? evaluationFunction.apply(currentGameState) : -evaluationFunction.apply(currentGameState);
 
-            if(alpha >=beta) {
-                return beta;
+        List<Move> allLegalMoves = MoveCalculator.getAllLegalMoves(currentGameState, PieceColor.BLACK); // TODO PieceColor.WHITE
+        for(Move legalMove : allLegalMoves) {
+
+            //clone gameState and move
+            String currentGameFenString = FenLoader.generateFenStringFromGameState(currentGameState);
+            GameState clonedGameState = FenLoader.loadGameStateFromFenString(currentGameFenString);
+
+            clonedGameState.movePieceWithLegalCheck(clonedGameState.getPieceAtPosition(legalMove.getOldBoardPosition()), legalMove.getNewBoardPosition());
+
+            double newBeta = Math.min(beta, pruning_max(clonedGameState, pieceColor, depth - 1, alpha, beta));
+
+            if(alpha >= beta) {
+                return newBeta;
             }
         }
 

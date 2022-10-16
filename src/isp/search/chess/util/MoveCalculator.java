@@ -262,6 +262,27 @@ public class MoveCalculator {
     }
 
 
+
+    public static List<Move> getAllLegalMoves(GameState currentGameState, PieceColor pieceColor){
+
+        List<Move> allLegalMoves = new ArrayList<>();
+
+        //get random piece that is movable
+        List<Piece> allPieces = currentGameState.getPieces().stream()
+                .filter(p -> p.getPieceColor() == pieceColor)
+                .toList();
+
+        for(Piece piece : allPieces){
+            getLegalMoves(currentGameState, piece).stream().forEach(moveToPos -> {
+                allLegalMoves.add(new Move(piece.getBoardPosition(), moveToPos));
+            });
+        }
+
+        return allLegalMoves;
+    }
+
+
+
     //--position heper--
 
     //check if square is not occupied by other piece
