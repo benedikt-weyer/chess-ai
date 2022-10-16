@@ -4,6 +4,7 @@ package isp.search.chess;
 import isp.search.chess.ai.ChessAI;
 import isp.search.chess.ai.ChessAIEvaluator;
 import isp.search.chess.ai.ChessAIRandom;
+import isp.search.chess.ai.Evaluator;
 import isp.search.chess.enums.PieceColor;
 
 public class App {
@@ -13,15 +14,17 @@ public class App {
 
         ChessGame chessGame = new ChessGame(fenStringStartingPosition);
 
-        ChessAI evaluatorChessAI = new ChessAIEvaluator(chessGame, PieceColor.WHITE);
+        ChessAI evaluatorChessAI = new ChessAIEvaluator(chessGame, PieceColor.WHITE, Evaluator::evaluatePiecesByStaticValue, 1);
 
-        ChessAI randomChessAI2 = new ChessAIRandom(chessGame, PieceColor.BLACK);
+        ChessAI evaluatorChessAI2 = new ChessAIEvaluator(chessGame, PieceColor.BLACK, Evaluator::benediktsEvaluator, 1);
+
+        ChessAI randomChessAI = new ChessAIRandom(chessGame, PieceColor.BLACK);
 
         LocalPlayer localPlayer = new LocalPlayer(chessGame, PieceColor.WHITE);
 
         //set players
         chessGame.setPlayerWhite(evaluatorChessAI);
-        chessGame.setPlayerBlack(randomChessAI2);
+        chessGame.setPlayerBlack(evaluatorChessAI2);
 
         chessGame.start();
     }

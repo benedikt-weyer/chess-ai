@@ -71,7 +71,8 @@ public class Evaluator {
         double relativeMovePossibilitiesEvaluation = relativeMovePossibilitiesEvaluator(currentGameState);
         double checkmateEvaluation = checkmateEvaluator(currentGameState);
 
-        return 1 * staticEvaluation + 0.1 * relativeMovePossibilitiesEvaluation + checkmateEvaluation;
+
+        return 1 * staticEvaluation + 0.3 * relativeMovePossibilitiesEvaluation + checkmateEvaluation;
 
     }
 

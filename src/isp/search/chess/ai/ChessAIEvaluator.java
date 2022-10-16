@@ -8,14 +8,21 @@ import isp.search.chess.util.Move;
 import isp.search.chess.util.MoveCalculator;
 
 import java.util.List;
+import java.util.function.Function;
 
 /*
  * Diese Klasse erweitert die Klasse ChessAI und implementiert die Bewertung der Spielsituation.
  */
 public class ChessAIEvaluator extends ChessAI{
-    public ChessAIEvaluator(ChessGame chessGame, PieceColor pieceColor) {
+    private Function<GameState, Double> evalFunction;
+    private int depth;
+
+    public ChessAIEvaluator(ChessGame chessGame, PieceColor pieceColor, Function<GameState, Double>  evalFunction, int depth) {
         super(chessGame, pieceColor);
+        this.evalFunction = evalFunction;
+        this.depth = depth;
     }
+
 
 
     @Override
@@ -24,7 +31,7 @@ public class ChessAIEvaluator extends ChessAI{
         GameState currentGameState = chessGame.getGameState();
 
         //new Alpha Beta Pruning with eval method
-        AlphaBetaPruning alphaBetaPruning = new AlphaBetaPruning(Evaluator::benediktsEvaluator);
+        AlphaBetaPruning alphaBetaPruning = new AlphaBetaPruning(this.evalFunction);
 
         List<Move> allLegalMoves = MoveCalculator.getAllLegalMoves(currentGameState, this.pieceColor);
         Move bestMove = null;
@@ -38,11 +45,10 @@ public class ChessAIEvaluator extends ChessAI{
 
             clonedGameState.movePieceWithLegalCheck(clonedGameState.getPieceAtPosition(legalMove.getOldBoardPosition()), legalMove.getNewBoardPosition());
 
-            //System.out.println(-Double.MAX_VALUE >= 0);
-            int depth = 1;
-            double evalOfMove = alphaBetaPruning.pruning_min(clonedGameState, this.pieceColor, depth, -Double.MAX_VALUE, Double.MAX_VALUE);
 
-            //System.out.println(String.format("Move for %s: %s with eval of %s", this.pieceColor, legalMove, evalOfMove));
+            double evalOfMove = alphaBetaPruning.pruning_min(clonedGameState, this.pieceColor, this.depth, -Double.MAX_VALUE, Double.MAX_VALUE);
+
+            System.out.println(String.format("Move for %s: %s with eval of %s", this.pieceColor, legalMove, evalOfMove));
 
             if(evalOfMove >= bestMoveEval){
                 bestMove = legalMove;
