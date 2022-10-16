@@ -63,7 +63,7 @@ daher Alpha Beta Pruning evtl.
 ![](./rsc/2022-10-16%2012_50_08-Window.png)
 
 ### 3. und 4. also Implementieren und testen der Heuristiken
-Wir haben mit den einfachsten Heursitiken angefangen, also wie viele Schachfiguren von und - wie viele Figuren vom Gegner 
+Wir haben mit den einfachsten Heuristiken angefangen, also wie viele Schachfiguren von und - wie viele Figuren vom Gegner 
 noch stehen.
 Weiß hat dabei mit der Heuristik gespielt und mit einer Depth von 1 geschaut was am meisten Sinn macht.
 Schwarz hat mit der Random Schach AI gespielt. Oft konnte Weiß gewinnen aber meist kam es zu einem Unentschieden, da Weiß mit einer
@@ -78,6 +78,7 @@ wurde zwar der richtige Zug aus der Berechnung gefunden, aber
 die Berechnung selbst schien nicht korrekt zu sein. Nach längerer Suche haben wir herausgefunden, dass unsere Implementierung des
 Alphabeta-Pruning nicht korrekt war. Wir haben uns dann an die Implementierung von AlphaBeta Pruning aus nach dem in der Vorlesung gezeigten Beispiel gehalten. Dies hat dann auch das richtige Ergebnis geliefert.
 Bei 2 gleichen AIs die gegeneinander spielen läuft es nahezu immer in einen Deadlock.
+Aufgrund von vermutlich schlechter Optimierung der Berechnung ist die Berechnung ab einer Tiefe von 2 sehr langsam.
 
 ## Sources
 - https://www.chessprogramming.org/Alpha-Beta
