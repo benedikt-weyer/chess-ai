@@ -34,7 +34,7 @@ Die Heuristiken sollen die Qualität eines Zuges bewerten. Dafür werden die Zü
 3. Möglichkeiten des Gegners
    - Wenige von unseren Figuren zu schlagen?
 4. Position der Figuren
-  - Wenn ich keinen Unterschied zwischen den Positionen meiner und der Figuren meines Gegners sehe ist das Spiel ausgegeglichen
+   - Wenn ich keinen Unterschied zwischen den Positionen meiner und der Figuren meines Gegners sehe, ist das Spiel ausgegeglichen
 5. Mattgefahr 
 6. Mattgefahr des Gegners 
 7. Platz
@@ -55,8 +55,8 @@ Die Heuristiken sollen die Qualität eines Zuges bewerten. Dafür werden die Zü
 ### Pruning:
 - MinMax ist nicht machbar im Schach, da zu viele möglichkeiten abgewägt werden würden
 daher Alpha Beta Pruning evtl.
-![](../../Desktop/2022-10-16 12_07_41-Window.png)
+![](./rsc/2022-10-16%2012_50_08-Window.png)
 ### Sources
-https://www.quora.com/What-are-some-heuristics-for-quickly-evaluating-chess-positions
-https://www.youtube.com/watch?v=hCbfTm-b6iM
+https://www.quora.com/What-are-some-heuristics-for-quickly-evaluating-chess-positions \
+https://www.youtube.com/watch?v=hCbfTm-b6iM \
 https://www.youtube.com/watch?v=l-hh51ncgDI
