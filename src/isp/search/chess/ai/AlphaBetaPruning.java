@@ -6,12 +6,12 @@ import isp.search.chess.util.BoardPosition;
 
 public interface AlphaBetaPruning {
     // Aufgerufen durch pruning_max(jetzigerSpielstand, wieTief?,Farbe, -unendlich,unendlich)
-    default int pruning_max(BoardPosition boardPosition, int depth, PieceColor pieceColor, int alpha, int beta) {
+    default int pruning_max(GameState gameState, int depth, PieceColor pieceColor, int alpha, int beta) {
         if (depth == 0) {
             //return eval(); hier muss ne berechnungsmethode rein wonach wir bewerten
         }
         for(/* mal schauen*/) {
-            alpha = Math.max(alpha,pruning_min(,alpha,beta));
+            alpha = Math.max(alpha,pruning_min(,depth,pieceColor,alpha,beta));
 
             if(alpha >=beta) {
                 return alpha;
@@ -25,7 +25,7 @@ public interface AlphaBetaPruning {
             //return eval(); hier muss ne berechnungsmethode rein wonach wir bewerten
         }
         for(/* mal schauen*/) {
-            beta = Math.min(beta,pruning_max(,alpha,beta));
+            beta = Math.min(beta,pruning_max(,depth,pieceColor,alpha,beta));
 
             if(alpha >=beta) {
                 return beta;
@@ -34,4 +34,6 @@ public interface AlphaBetaPruning {
 
         return beta;
     }
+
+
 }
