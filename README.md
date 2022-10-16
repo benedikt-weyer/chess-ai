@@ -57,5 +57,6 @@ Wert der Figuren Vorschlag
 daher Alpha Beta Pruning evtl.
 ![](../../Desktop/2022-10-16 12_07_41-Window.png)
 ### Sources
-https://www.quora.com/What-are-some-heuristics-for-quickly-evaluating-chess-positions \
+https://www.quora.com/What-are-some-heuristics-for-quickly-evaluating-chess-positions
 https://www.youtube.com/watch?v=hCbfTm-b6iM
+https://www.youtube.com/watch?v=l-hh51ncgDI
