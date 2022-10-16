@@ -69,11 +69,16 @@ Weiß hat dabei mit der Heuristik gespielt und mit einer Depth von 1 geschaut wa
 Schwarz hat mit der Random Schach AI gespielt. Oft konnte Weiß gewinnen aber meist kam es zu einem Unentschieden, da Weiß mit einer
 tiefensuche bis depth = 1 nicht besonders weit in die Zukunft schauen konnte und daher auch nicht das Schachmatt erzwingen konnte.
 Mit einer Tiefe von 2 war der Algorithmus sehr langsam.
+
 #### Probleme:
 Auch wenn die Heuristik sehr einfach ist, ist die Implementierung schwerer gewesen als gedacht. Die KI hat trotz
-logisch korrekter Implementierung nicht immer das richtige Ergebnis geliefert. Zwar wurde der richtige Zug aus der Berechnung gefunden, aber
+logisch korrekter Implementierung nicht immer das richtige Ergebnis geliefert. Uns fiel auf, dass mit einer Tiefe von 0 (also nur der
+Beachtung der aktuellen Situation) immer der richtige Zug berechnet und gefunden wurde. Bei einer Tiefe von 2
+wurde zwar der richtige Zug aus der Berechnung gefunden, aber
 die Berechnung selbst schien nicht korrekt zu sein. Nach längerer Suche haben wir herausgefunden, dass die Berechnung nicht korrekt war, da ...
+
 ## Sources
-https://www.quora.com/What-are-some-heuristics-for-quickly-evaluating-chess-positions \
-https://www.youtube.com/watch?v=hCbfTm-b6iM \
-https://www.youtube.com/watch?v=l-hh51ncgDI
+- https://www.chessprogramming.org/Alpha-Beta
+- https://www.quora.com/What-are-some-heuristics-for-quickly-evaluating-chess-positions
+- https://www.youtube.com/watch?v=hCbfTm-b6iM
+- https://www.youtube.com/watch?v=l-hh51ncgDI
