@@ -34,7 +34,7 @@ Die Heuristiken sollen die Qualität eines Zuges bewerten. Dafür werden die Zü
 - Mattgefahr des Gegners
 - Figurenanzahl
 - - Der Zustand wird ausgewählt bei dem wir am meisten Figuren haben
-- - Der Zustand wird ausgewählt wo der Gegner am wenigsten Figuren hat
+- - Der Zustand wird ausgewählt, wo der Gegner am wenigsten Figuren hat
 - - Alg wer hat weniger Figuren übrig?
 - Platz
 - - Welche Seite beansprucht mehr Felder (hinter sich)
@@ -43,17 +43,19 @@ Die Heuristiken sollen die Qualität eines Zuges bewerten. Dafür werden die Zü
 - Initiative
 - - Damit ist gemeint welcher Spieler die Figuren des anderen bedroht egal so von den Positionen her oder Figuren. Wer seinen "Plan" ausführen kann hat die Initiative
 - Maps pro FigurenTyp wo es lieber hinsoll, mit int werten pro Feld 
+- Gesamtanzahl der Figuren
+- - Anzahl der eigenen Figuren - Anzahl der gegnerischen Figuren (wenn negativ dann ist der Gegner im Vorteil)
 
 Wert der Figuren Vorschlag
 - Pawn = 1
 - Bishop/knight = 3
 - rook = 5
 - queen = 9
-- Falls König tot ist, ist der Wert der anderen Figuren egal. daher prüfen wir nur ob er noch lebt sonst nichts
+- Falls König tot ist, ist der Wert der anderen Figuren egal. daher prüfen wir nur, ob er noch lebt sonst nichts
 
 - MinMax ist nicht machbar im Schach, da zu viele möglichkeiten abgewägt werden würden
 daher Alpha Beta Pruning evtl.
 ![](../../Desktop/2022-10-16 12_07_41-Window.png)
 ### Sources
-https://www.quora.com/What-are-some-heuristics-for-quickly-evaluating-chess-positions
+https://www.quora.com/What-are-some-heuristics-for-quickly-evaluating-chess-positions \
 https://www.youtube.com/watch?v=hCbfTm-b6iM
