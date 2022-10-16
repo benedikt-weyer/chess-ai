@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SinglePlayerPanel extends JPanel{
+public class SinglePlayerPanel extends JPanel {
     private static final int BOARD_X = 0;
     private static final int BOARD_Y = 0;
     public static final int BOARD_SIZE = 1000;
@@ -28,51 +28,50 @@ public class SinglePlayerPanel extends JPanel{
     private List<BoardPosition> selectedTiles;
 
 
-    public SinglePlayerPanel(){
+    public SinglePlayerPanel() {
         super();
         chessPieceAtlasImage = ChessPieceImageHelper.getTextureAtlas();
     }
-    
+
     @Override
-    protected void paintComponent(Graphics g){
+    protected void paintComponent(Graphics g) {
         //setup
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(
-            RenderingHints.KEY_TEXT_ANTIALIASING,
-            RenderingHints.VALUE_TEXT_ANTIALIAS_ON
+                RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_ON
         );
         g2.setRenderingHint(
-            RenderingHints.KEY_ANTIALIASING,
-            RenderingHints.VALUE_ANTIALIAS_ON
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON
         );
         g2.setRenderingHint(
-            RenderingHints.KEY_INTERPOLATION,
-            RenderingHints.VALUE_INTERPOLATION_BILINEAR
+                RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR
         );
-
 
 
         //calculate move indicators
         List<BoardPosition> moveIndicatorPositions = new ArrayList<>();
 
         selectedTiles.stream().forEach(selectedTile -> {
-            moveIndicatorPositions.addAll( MoveCalculator.getLegalMoves(gameState, gameState.getPieceAtPosition(selectedTile)) );
+            moveIndicatorPositions.addAll(MoveCalculator.getLegalMoves(gameState, gameState.getPieceAtPosition(selectedTile)));
         });
 
 
         //loop over every square
-        for(int x=0; x<ROW_COUNT; x++){
-            for(int y=0; y<ROW_COUNT; y++){
-                final int tileSize = BOARD_SIZE/ROW_COUNT;
+        for (int x = 0; x < ROW_COUNT; x++) {
+            for (int y = 0; y < ROW_COUNT; y++) {
+                final int tileSize = BOARD_SIZE / ROW_COUNT;
 
                 BoardPosition currentBoardPosition = new BoardPosition(x, y);
                 Piece currentPiece = gameState.getPieceAtPosition(currentBoardPosition);
 
                 //draw squares
 
-                g2.setColor((x + y ) % 2 == 0 ? new Color(50, 65, 70) : Color.WHITE);
+                g2.setColor((x + y) % 2 == 0 ? new Color(50, 65, 70) : Color.WHITE);
                 //if tile is selected change color
-                if(selectedTiles.stream().anyMatch(selectedTile -> selectedTile.equals(currentBoardPosition))){
+                if (selectedTiles.stream().anyMatch(selectedTile -> selectedTile.equals(currentBoardPosition))) {
                     g2.setColor(new Color(150, 165, 170));
                 }
 
@@ -80,14 +79,14 @@ public class SinglePlayerPanel extends JPanel{
 
 
                 //draw move indicators
-                if(moveIndicatorPositions.contains(currentBoardPosition)){
+                if (moveIndicatorPositions.contains(currentBoardPosition)) {
 
-                    if(currentPiece == null) {
+                    if (currentPiece == null) {
                         final short indicatorRadius = tileSize / 2 / 5;
                         g2.setColor(new Color(150, 165, 170));
                         g2.fillOval(x * tileSize + tileSize / 2 - indicatorRadius, y * tileSize + tileSize / 2 - indicatorRadius,
                                 indicatorRadius * 2, indicatorRadius * 2);
-                    }else{
+                    } else {
                         g2.setColor(new Color(200, 165, 170));
                         g2.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
                     }
@@ -95,36 +94,36 @@ public class SinglePlayerPanel extends JPanel{
 
 
                 //draw pieces
-                if(currentPiece != null){
+                if (currentPiece != null) {
                     Rectangle pieceBounds = ChessPieceImageHelper.getBoundsByPiece(currentPiece.getPieceType(), currentPiece.getPieceColor());
 
                     g2.drawImage(chessPieceAtlasImage, x * tileSize, y * tileSize, x * tileSize + tileSize, y * tileSize + tileSize,
-                        pieceBounds.x, pieceBounds.y, pieceBounds.x + pieceBounds.width, pieceBounds.y + pieceBounds.height, null);
+                            pieceBounds.x, pieceBounds.y, pieceBounds.x + pieceBounds.width, pieceBounds.y + pieceBounds.height, null);
                 }
-
-
 
 
             }
         }
-        
+
     }
 
-    public void setGameState(GameState gameState){
+    public void setGameState(GameState gameState) {
         this.gameState = gameState;
     }
 
 
-    public void renderBoard(GameState gameState, Player playerBlack, Player playerWhite){
+    public void renderBoard(GameState gameState, Player playerBlack, Player playerWhite) {
         this.gameState = gameState;
 
         this.selectedTiles = new ArrayList<>();
-        if(playerBlack != null && playerBlack.getSelectedTile() != null) selectedTiles.add(playerBlack.getSelectedTile());
-        if(playerWhite != null && playerWhite.getSelectedTile() != null) selectedTiles.add(playerWhite.getSelectedTile());
+        if (playerBlack != null && playerBlack.getSelectedTile() != null)
+            selectedTiles.add(playerBlack.getSelectedTile());
+        if (playerWhite != null && playerWhite.getSelectedTile() != null)
+            selectedTiles.add(playerWhite.getSelectedTile());
 
 
         repaint();
-        
+
     }
 
 }

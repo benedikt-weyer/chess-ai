@@ -165,32 +165,32 @@ public class MoveCalculator {
                 legalMoves.addAll(possibleKingMoves);
 
                 //castle
-                if(piece.getPieceColor() == PieceColor.BLACK){
-                    if(gameState.isCastleRightsBlackK()){
-                        if(isSquareEmpty(gameState, 5, 7) && isSquareEmpty(gameState, 6, 7)){
-                            if(!canOpponentPiecesSeeSquare(gameState, new BoardPosition(4, 7), piece.getPieceColor())
-                            && !canOpponentPiecesSeeSquare(gameState, new BoardPosition(5, 7), piece.getPieceColor())){
+                if (piece.getPieceColor() == PieceColor.BLACK) {
+                    if (gameState.isCastleRightsBlackK()) {
+                        if (isSquareEmpty(gameState, 5, 7) && isSquareEmpty(gameState, 6, 7)) {
+                            if (!canOpponentPiecesSeeSquare(gameState, new BoardPosition(4, 7), piece.getPieceColor())
+                                    && !canOpponentPiecesSeeSquare(gameState, new BoardPosition(5, 7), piece.getPieceColor())) {
                                 legalMoves.add(new BoardPosition(piece.getBoardX() + 2, piece.getBoardY()));
                             }
                         }
                     }
-                    if(gameState.isCastleRightsBlackQ()){
-                        if(isSquareEmpty(gameState, 3, 7) && isSquareEmpty(gameState, 2, 7) && isSquareEmpty(gameState, 1, 7)) {
-                            if(!canOpponentPiecesSeeSquare(gameState, new BoardPosition(4, 7), piece.getPieceColor())
+                    if (gameState.isCastleRightsBlackQ()) {
+                        if (isSquareEmpty(gameState, 3, 7) && isSquareEmpty(gameState, 2, 7) && isSquareEmpty(gameState, 1, 7)) {
+                            if (!canOpponentPiecesSeeSquare(gameState, new BoardPosition(4, 7), piece.getPieceColor())
                                     && !canOpponentPiecesSeeSquare(gameState, new BoardPosition(3, 7), piece.getPieceColor())
                                     && !canOpponentPiecesSeeSquare(gameState, new BoardPosition(2, 7), piece.getPieceColor())) {
                                 legalMoves.add(new BoardPosition(piece.getBoardX() - 2, piece.getBoardY()));
                             }
                         }
                     }
-                }else if(piece.getPieceColor() == PieceColor.WHITE){
-                    if(gameState.isCastleRightsWhiteK()){
-                        if(isSquareEmpty(gameState, 5, 0) && isSquareEmpty(gameState, 6, 0)) {
+                } else if (piece.getPieceColor() == PieceColor.WHITE) {
+                    if (gameState.isCastleRightsWhiteK()) {
+                        if (isSquareEmpty(gameState, 5, 0) && isSquareEmpty(gameState, 6, 0)) {
                             legalMoves.add(new BoardPosition(piece.getBoardX() + 2, piece.getBoardY()));
                         }
                     }
-                    if(gameState.isCastleRightsWhiteQ()){
-                        if(isSquareEmpty(gameState, 3, 0) && isSquareEmpty(gameState, 2, 0) && isSquareEmpty(gameState, 1, 0)) {
+                    if (gameState.isCastleRightsWhiteQ()) {
+                        if (isSquareEmpty(gameState, 3, 0) && isSquareEmpty(gameState, 2, 0) && isSquareEmpty(gameState, 1, 0)) {
                             legalMoves.add(new BoardPosition(piece.getBoardX() - 2, piece.getBoardY()));
                         }
                     }
@@ -214,7 +214,7 @@ public class MoveCalculator {
 
 
             //remove check putting moves
-            if(checkForCheck) {
+            if (checkForCheck) {
                 ListIterator<BoardPosition> legalMovesIterator = legalMoves.listIterator();
                 while (legalMovesIterator.hasNext()) {
                     BoardPosition legalMove = legalMovesIterator.next();
@@ -241,18 +241,18 @@ public class MoveCalculator {
                     clonedGameState.getPieces().stream()
                             .filter(p -> p.getPieceColor() != clonedStatePiece.getPieceColor()) //filter opponents
                             .forEach(opponentsPiece -> {
-                                if(foundCheck.get()) return;
+                                if (foundCheck.get()) return;
 
                                 List<BoardPosition> legalMovesFromOpponent = getLegalMoves(clonedGameState, opponentsPiece, false);
 
                                 foundCheck.set(
                                         legalMovesFromOpponent.stream()
-                                            .anyMatch(opponentLegalMove -> opponentLegalMove.equals(clonedKingPosition)));
+                                                .anyMatch(opponentLegalMove -> opponentLegalMove.equals(clonedKingPosition)));
 
                             });
 
                     //remove move if results in check
-                    if(foundCheck.get()) legalMovesIterator.remove();
+                    if (foundCheck.get()) legalMovesIterator.remove();
                 }
             }
 
@@ -262,8 +262,7 @@ public class MoveCalculator {
     }
 
 
-
-    public static List<Move> getAllLegalMoves(GameState currentGameState, PieceColor pieceColor){
+    public static List<Move> getAllLegalMoves(GameState currentGameState, PieceColor pieceColor) {
 
         List<Move> allLegalMoves = new ArrayList<>();
 
@@ -272,7 +271,7 @@ public class MoveCalculator {
                 .filter(p -> p.getPieceColor() == pieceColor)
                 .toList();
 
-        for(Piece piece : allPieces){
+        for (Piece piece : allPieces) {
             getLegalMoves(currentGameState, piece).stream().forEach(moveToPos -> {
                 allLegalMoves.add(new Move(piece.getBoardPosition(), moveToPos));
             });
@@ -280,7 +279,6 @@ public class MoveCalculator {
 
         return allLegalMoves;
     }
-
 
 
     //--position heper--
@@ -343,14 +341,14 @@ public class MoveCalculator {
     }
 
 
-    private static boolean canOpponentPiecesSeeSquare(GameState gameState, BoardPosition boardPosition, PieceColor ownColor){
+    private static boolean canOpponentPiecesSeeSquare(GameState gameState, BoardPosition boardPosition, PieceColor ownColor) {
 
 
         AtomicBoolean foundCheck = new AtomicBoolean(false);
         gameState.getPieces().stream()
                 .filter(p -> p.getPieceColor() != ownColor) //filter opponents
                 .forEach(opponentsPiece -> {
-                    if(foundCheck.get()) return;
+                    if (foundCheck.get()) return;
 
                     List<BoardPosition> legalMovesFromOpponent = getLegalMoves(gameState, opponentsPiece, false);
 

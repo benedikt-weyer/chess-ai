@@ -15,7 +15,7 @@ import java.util.List;
 public class ChessAIFirstMove extends ChessAI {
 
     public ChessAIFirstMove(ChessGame chessGame, PieceColor pieceColor) {
-       super(chessGame, pieceColor);
+        super(chessGame, pieceColor);
     }
 
 

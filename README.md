@@ -19,7 +19,7 @@ Diese Aufgabe wurde von allen drei Gruppenmitgliedern geteilt und gemeinsam bear
 ### 2. Implementieren eines Schachprogramms
 Dies wurde hauptsächlich von Benni durchgeführt. Er hat das Schachprogramm überwiegend alleine geschrieben, da er größere Erfahrung mit Schach hat.
 ### 3. Implementieren der Heuristiken
-Die Implementierung der Heuristiken wurde von Mirco und Julius durchgeführt. Dabei wurde die Arbeit aufgeteilt, wobei Mirco die Heuristiken ... und ... implementiert hat, während Julius die Heuristiken ... und ... implementiert hat.
+Diese Aufgabe wurde von allen drei Gruppenmitgliedern geteilt und gemeinsam bearbeitet.
 ### 4. Testen der Heuristiken
 Die Heuristiken wurden von allen drei Gruppenmitgliedern getestet. 
 ### 5. Vergleichen der Heuristiken
