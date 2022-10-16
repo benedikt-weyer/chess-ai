@@ -1,12 +1,14 @@
 package isp.search.chess;
 
 import isp.search.chess.ai.ChessAI;
+import isp.search.chess.ai.ChessAIFirstMove;
+import isp.search.chess.ai.ChessAIRandom;
 import isp.search.chess.enums.PieceColor;
 import isp.search.chess.gui.SingleplayerFrame;
 import isp.search.chess.util.BoardPosition;
 import isp.search.chess.util.FenLoader;
 
-public class ChessGame implements UserInputListener{
+public class ChessGame implements UserInputListener {
     private GameState gameState;
     private ChessAI chessAI;
     private UserBoardListener userBoardListener;
@@ -15,7 +17,7 @@ public class ChessGame implements UserInputListener{
     private BoardPosition selectedTile = null;
 
     public ChessGame(String fenString) {
-        
+
         //load game state
         this.gameState = FenLoader.loadGameStateFromFenString(fenString);
 
@@ -28,7 +30,7 @@ public class ChessGame implements UserInputListener{
         singleplayerFrame.addBoardListener(userBoardListener);
 
         //init ai
-        this.chessAI = new ChessAI(gameState, PieceColor.WHITE);
+        this.chessAI = new ChessAIFirstMove(gameState, PieceColor.WHITE); //Hier AI tauschen
         chessAI.move(); // first move
         rerender();
     }
@@ -36,30 +38,30 @@ public class ChessGame implements UserInputListener{
     @Override
     public void onTilePressed(BoardPosition pressedTile) {
 
-        if(selectedTile != null && selectedTile.equals(pressedTile)){
+        if (selectedTile != null && selectedTile.equals(pressedTile)) {
             selectedTile = null;
-        }else{ //if new tile pressed
+        } else { //if new tile pressed
             Piece pieceAtSelectedTile = gameState.getPieceAtPosition(selectedTile);
-            if(pieceAtSelectedTile != null){
+            if (pieceAtSelectedTile != null) {
                 //move player
-                if(!gameState.isGameFinished()) {
+                if (!gameState.isGameFinished()) {
                     boolean moveSuccess = gameState.movePieceWithLegalCheck(pieceAtSelectedTile, pressedTile);
 
-                    if(moveSuccess){
+                    if (moveSuccess) {
                         //move ai
-                        if(!gameState.isGameFinished()){
+                        if (!gameState.isGameFinished()) {
                             chessAI.move();
                         }
 
                         //deselect move indicator
                         selectedTile = null;
-                    }else{
+                    } else {
                         selectedTile = pressedTile;
                     }
-                }else{
+                } else {
                     selectedTile = pressedTile;
                 }
-            }else{
+            } else {
                 selectedTile = pressedTile;
             }
         }

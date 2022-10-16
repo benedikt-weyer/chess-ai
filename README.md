@@ -54,3 +54,4 @@ Wert der Figuren Vorschlag
 
 ### Sources
 https://www.quora.com/What-are-some-heuristics-for-quickly-evaluating-chess-positions
+https://www.youtube.com/watch?v=hCbfTm-b6iM
