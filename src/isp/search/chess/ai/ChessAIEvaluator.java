@@ -34,35 +34,72 @@ public class ChessAIEvaluator extends ChessAI{
         AlphaBetaPruning alphaBetaPruning = new AlphaBetaPruning(this.evalFunction);
 
         List<Move> allLegalMoves = MoveCalculator.getAllLegalMoves(currentGameState, this.pieceColor);
-        Move bestMove = null;
-        double bestMoveEval = -Double.MAX_VALUE;
 
-        //for every move: select best
-        for(Move legalMove : allLegalMoves) {
-                        //clone gameState and move
-            String currentGameFenString = FenLoader.generateFenStringFromGameState(currentGameState);
-            GameState clonedGameState = FenLoader.loadGameStateFromFenString(currentGameFenString);
 
-            clonedGameState.movePieceWithLegalCheck(clonedGameState.getPieceAtPosition(legalMove.getOldBoardPosition()), legalMove.getNewBoardPosition());
+        if(this.pieceColor == PieceColor.WHITE) {
+            Move bestMove = null;
+            double bestMoveEval = Double.NEGATIVE_INFINITY;
 
-            System.out.println(bestMoveEval);
-            double evalOfMove = alphaBetaPruning.pruning_min(clonedGameState, this.pieceColor, this.depth, bestMoveEval, Double.MAX_VALUE);
+            //for every move: select best
+            for (Move legalMove : allLegalMoves) {
+                //clone gameState and move
+                String currentGameFenString = FenLoader.generateFenStringFromGameState(currentGameState);
+                GameState clonedGameState = FenLoader.loadGameStateFromFenString(currentGameFenString);
+                clonedGameState.movePieceWithLegalCheck(clonedGameState.getPieceAtPosition(legalMove.getOldBoardPosition()), legalMove.getNewBoardPosition());
 
-            System.out.println(String.format("Move for %s: %s with eval of %s", this.pieceColor, legalMove, evalOfMove));
+                //System.out.println(bestMoveEval);
+                //double evalOfMove = alphaBetaPruning.pruning_min(clonedGameState, this.pieceColor, this.depth, bestMoveEval, Double.MAX_VALUE);
 
-            if(evalOfMove >= bestMoveEval){
-                bestMove = legalMove;
-                bestMoveEval = evalOfMove;
+                double evalOfMove = alphaBetaPruning.minimax(clonedGameState, PieceColor.WHITE, this.depth, bestMoveEval, Double.POSITIVE_INFINITY);
 
+                System.out.println(String.format("Move for %s: %s with eval of %s", this.pieceColor, legalMove, evalOfMove));
+
+                if (evalOfMove >= bestMoveEval) {
+                    bestMove = legalMove;
+                    bestMoveEval = evalOfMove;
+
+                }
             }
 
+            System.out.println(String.format("Best Move for %s: %s with eval of %s", this.pieceColor, bestMove, bestMoveEval));
+            System.out.println("------------------------------------");
+
+            //move best move
+            currentGameState.movePieceWithLegalCheck(currentGameState.getPieceAtPosition(bestMove.getOldBoardPosition()), bestMove.getNewBoardPosition());
         }
 
-        System.out.println(String.format("Best Move for %s: %s with eval of %s", this.pieceColor, bestMove, bestMoveEval));
-        System.out.println("------------------------------------");
 
-        //move best move
-        currentGameState.movePieceWithLegalCheck(currentGameState.getPieceAtPosition(bestMove.getOldBoardPosition()), bestMove.getNewBoardPosition());
 
+        if(this.pieceColor == PieceColor.BLACK) {
+            Move bestMove = null;
+            double bestMoveEval = Double.POSITIVE_INFINITY;
+
+            //for every move: select best
+            for (Move legalMove : allLegalMoves) {
+                //clone gameState and move
+                String currentGameFenString = FenLoader.generateFenStringFromGameState(currentGameState);
+                GameState clonedGameState = FenLoader.loadGameStateFromFenString(currentGameFenString);
+                clonedGameState.movePieceWithLegalCheck(clonedGameState.getPieceAtPosition(legalMove.getOldBoardPosition()), legalMove.getNewBoardPosition());
+
+                //System.out.println(bestMoveEval);
+                //double evalOfMove = alphaBetaPruning.pruning_min(clonedGameState, this.pieceColor, this.depth, bestMoveEval, Double.MAX_VALUE);
+
+                double evalOfMove = alphaBetaPruning.minimax(clonedGameState, PieceColor.BLACK, this.depth, Double.NEGATIVE_INFINITY, bestMoveEval);
+
+                System.out.println(String.format("Move for %s: %s with eval of %s", this.pieceColor, legalMove, evalOfMove));
+
+                if (evalOfMove <= bestMoveEval) {
+                    bestMove = legalMove;
+                    bestMoveEval = evalOfMove;
+
+                }
+            }
+
+            System.out.println(String.format("Best Move for %s: %s with eval of %s", this.pieceColor, bestMove, bestMoveEval));
+            System.out.println("------------------------------------");
+
+            //move best move
+            currentGameState.movePieceWithLegalCheck(currentGameState.getPieceAtPosition(bestMove.getOldBoardPosition()), bestMove.getNewBoardPosition());
+        }
     }
 }

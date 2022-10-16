@@ -38,16 +38,15 @@ public class Evaluator {
         return whitePieceValueSum - blackPieceValueSum;
     }
 
+
     public static double relativeMovePossibilitiesEvaluator(GameState currentGameState){
 
         //limit opponents movement & maximize own movement
         double whiteMoveCount = MoveCalculator.getAllLegalMoves(currentGameState, PieceColor.WHITE).size();
         double blackMoveCount = MoveCalculator.getAllLegalMoves(currentGameState, PieceColor.BLACK).size();
 
-        double whiteMoveCountRelativeToPieceCount = whiteMoveCount / currentGameState.getPieces().stream().filter(p -> p.getPieceColor() == PieceColor.WHITE).count();
-        double blackMoveCountRelativeToPieceCount = blackMoveCount / currentGameState.getPieces().stream().filter(p -> p.getPieceColor() == PieceColor.BLACK).count();
-
-        return whiteMoveCountRelativeToPieceCount - blackMoveCountRelativeToPieceCount;
+        //normalize
+        return (whiteMoveCount - blackMoveCount) / (whiteMoveCount + blackMoveCount);
 
     }
 
@@ -71,7 +70,7 @@ public class Evaluator {
         double checkmateEvaluation = checkmateEvaluator(currentGameState);
 
 
-        return 1 * staticEvaluation + checkmateEvaluation;
+        return 1 * staticEvaluation + checkmateEvaluation + 0.1 * Math.random();
 
     }
 
@@ -83,7 +82,8 @@ public class Evaluator {
         double checkmateEvaluation = checkmateEvaluator(currentGameState);
 
 
-        return 1 * staticEvaluation + 0.3 * relativeMovePossibilitiesEvaluation + checkmateEvaluation;
+
+        return 1 * staticEvaluation + 0.3 * relativeMovePossibilitiesEvaluation + checkmateEvaluation + 0.1 * Math.random();
 
     }
 

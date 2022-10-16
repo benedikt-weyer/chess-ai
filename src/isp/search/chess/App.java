@@ -14,13 +14,13 @@ public class App {
 
         ChessGame chessGame = new ChessGame(fenStringStartingPosition);
 
-        ChessAI evaluatorChessAI = new ChessAIEvaluator(chessGame, PieceColor.WHITE, Evaluator::evaluatorV2, 1);
+        ChessAI evaluatorChessAI = new ChessAIEvaluator(chessGame, PieceColor.WHITE, Evaluator::evaluatorV2, 2);
 
-        ChessAI evaluatorChessAI2 = new ChessAIEvaluator(chessGame, PieceColor.BLACK, Evaluator::evaluatorV2, 1);
+        ChessAI evaluatorChessAI2 = new ChessAIEvaluator(chessGame, PieceColor.BLACK, Evaluator::evaluatorV2, 2);
 
         ChessAI randomChessAI = new ChessAIRandom(chessGame, PieceColor.BLACK);
 
-        LocalPlayer localPlayer = new LocalPlayer(chessGame, PieceColor.WHITE);
+        LocalPlayer localPlayer = new LocalPlayer(chessGame, PieceColor.BLACK);
 
         //set players
         chessGame.setPlayerWhite(evaluatorChessAI);

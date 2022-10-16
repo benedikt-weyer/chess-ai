@@ -20,7 +20,7 @@ public abstract class ChessAI extends Player {
     public void onMoveRequested() {
         move();
         try {
-            Thread.sleep(10);
+            Thread.sleep(0);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
