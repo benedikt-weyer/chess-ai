@@ -75,7 +75,8 @@ Auch wenn die Heuristik sehr einfach ist, ist die Implementierung schwerer gewes
 logisch korrekter Implementierung nicht immer das richtige Ergebnis geliefert. Uns fiel auf, dass mit einer Tiefe von 0 (also nur der
 Beachtung der aktuellen Situation) immer der richtige Zug berechnet und gefunden wurde. Bei einer Tiefe von 2
 wurde zwar der richtige Zug aus der Berechnung gefunden, aber
-die Berechnung selbst schien nicht korrekt zu sein. Nach längerer Suche haben wir herausgefunden, dass die Berechnung nicht korrekt war, da ...
+die Berechnung selbst schien nicht korrekt zu sein. Nach längerer Suche haben wir herausgefunden, dass unsere Implementierung des
+Alphabeta-Pruning nicht korrekt war. Wir haben uns dann an die Implementierung von AlphaBeta Pruning aus nach dem in der Vorlesung gezeigten Beispiel gehalten. Dies hat dann auch das richtige Ergebnis geliefert.
 
 ## Sources
 - https://www.chessprogramming.org/Alpha-Beta
