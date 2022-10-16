@@ -15,10 +15,15 @@ Die Anzahl der Züge die berechnet werden, beschränken sich auf 3, damit wird s
 
 ## Vorgehen:
 ### 1. Überlegen von geeigneten Heuristiken
+Diese Aufgabe wurde von allen drei Gruppenmitgliedern geteilt und gemeinsam bearbeitet. Wobei Mirco und Julius weiterführende Recherchen durchgeführt haben.
 ### 2. Implementieren eines Schachprogramms
+Dies wurde hauptsächlich von Benni durchgeführt. Er hat das Schachprogramm überwiegend alleine geschrieben, da er größere Erfahrung mit Schach hat.
 ### 3. Implementieren der Heuristiken
+Die Implementierung der Heuristiken wurde von Mirco und Julius durchgeführt. Dabei wurde die Arbeit aufgeteilt, wobei Mirco die Heuristiken ... und ... implementiert hat, während Julius die Heuristiken ... und ... implementiert hat.
 ### 4. Testen der Heuristiken
+Die Heuristiken wurden von allen drei Gruppenmitgliedern getestet. 
 ### 5. Vergleichen der Heuristiken
+Die Heuristiken wurden gemeinsam verglichen und zusammengetragen.
 
 ## 1. Überlegen von geeigneten Heuristiken
 
@@ -56,7 +61,9 @@ Die Heuristiken sollen die Qualität eines Zuges bewerten. Dafür werden die Zü
 - MinMax ist nicht machbar im Schach, da zu viele möglichkeiten abgewägt werden würden
 daher Alpha Beta Pruning evtl.
 ![](./rsc/2022-10-16%2012_50_08-Window.png)
-### Sources
+
+
+## Sources
 https://www.quora.com/What-are-some-heuristics-for-quickly-evaluating-chess-positions \
 https://www.youtube.com/watch?v=hCbfTm-b6iM \
 https://www.youtube.com/watch?v=l-hh51ncgDI
