@@ -18,12 +18,13 @@ public abstract class ChessAI extends Player {
 
     @Override
     public void onMoveRequested() {
+        move();
         try {
-            Thread.sleep(0);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        move();
+
     }
 
     @Override

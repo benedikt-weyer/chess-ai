@@ -23,9 +23,10 @@ public class AlphaBetaPruning {
 
     // Aufgerufen durch pruning_max(jetzigerSpielstand, wieTief?,Farbe, -unendlich,unendlich)
     public double pruning_max(GameState currentGameState, PieceColor pieceColor, int depth, double alpha, double beta) {
-        if(depth == 0) return pieceColor == PieceColor.WHITE ? evaluationFunction.apply(currentGameState) : -evaluationFunction.apply(currentGameState);
+        if(depth == 0) return evaluationFunction.apply(currentGameState);
 
         List<Move> allLegalMoves = MoveCalculator.getAllLegalMoves(currentGameState, currentGameState.getTurnColor()); // TODO PieceColor.WHITE
+        double newAlpha = alpha;
         for(Move legalMove : allLegalMoves) {
 
             //clone gameState and move
@@ -34,20 +35,21 @@ public class AlphaBetaPruning {
 
             clonedGameState.movePieceWithLegalCheck(clonedGameState.getPieceAtPosition(legalMove.getOldBoardPosition()), legalMove.getNewBoardPosition());
 
-
-            double newAlpha = Math.max(alpha, pruning_min(clonedGameState, pieceColor, depth - 1, alpha, beta));
+            newAlpha = Math.max(alpha, pruning_min(clonedGameState, pieceColor == PieceColor.WHITE ? PieceColor.WHITE : PieceColor.BLACK, depth - 1, alpha, beta));
 
             if(newAlpha >= beta) {
                 return newAlpha;
             }
         }
 
-        return alpha;
+        return newAlpha;
     }
 
     public double pruning_min(GameState currentGameState, PieceColor pieceColor, int depth, double alpha, double beta) {
-        if(depth == 0) return pieceColor == PieceColor.WHITE ? evaluationFunction.apply(currentGameState) : -evaluationFunction.apply(currentGameState);
 
+        if(depth == 0) return evaluationFunction.apply(currentGameState);
+
+        double newBeta = beta;
         List<Move> allLegalMoves = MoveCalculator.getAllLegalMoves(currentGameState, currentGameState.getTurnColor()); // TODO PieceColor.WHITE
         for(Move legalMove : allLegalMoves) {
 
@@ -57,14 +59,14 @@ public class AlphaBetaPruning {
 
             clonedGameState.movePieceWithLegalCheck(clonedGameState.getPieceAtPosition(legalMove.getOldBoardPosition()), legalMove.getNewBoardPosition());
 
-            double newBeta = Math.min(beta, pruning_max(clonedGameState, pieceColor, depth - 1, alpha, beta));
+            newBeta = Math.min(beta, pruning_max(clonedGameState, pieceColor == PieceColor.WHITE ? PieceColor.WHITE : PieceColor.BLACK, depth - 1, alpha, beta));
 
-            if(alpha >= beta) {
+            if(alpha >= newBeta) {
                 return newBeta;
             }
         }
 
-        return beta;
+        return newBeta;
     }
 
 
