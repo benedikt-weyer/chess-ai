@@ -77,6 +77,7 @@ Beachtung der aktuellen Situation) immer der richtige Zug berechnet und gefunden
 wurde zwar der richtige Zug aus der Berechnung gefunden, aber
 die Berechnung selbst schien nicht korrekt zu sein. Nach längerer Suche haben wir herausgefunden, dass unsere Implementierung des
 Alphabeta-Pruning nicht korrekt war. Wir haben uns dann an die Implementierung von AlphaBeta Pruning aus nach dem in der Vorlesung gezeigten Beispiel gehalten. Dies hat dann auch das richtige Ergebnis geliefert.
+Bei 2 gleichen AIs die gegeneinander spielen läuft es nahezu immer in einen Deadlock.
 
 ## Sources
 - https://www.chessprogramming.org/Alpha-Beta
