@@ -18,8 +18,9 @@ public class FenLoader {
         String positionString = fenString.split(" ")[0];
         String turnColorChar = fenString.split(" ")[1];
         String castleRightString = fenString.split(" ")[2];
+        String anPassantString = fenString.split(" ")[3];
         String turn1 = fenString.split(" ")[3];
-        String turn2 = fenString.split(" ")[4];
+        String totalMoveCountString = fenString.split(" ")[4];
 
         List<Piece> pieces = new ArrayList<>();
 
@@ -68,8 +69,12 @@ public class FenLoader {
         boolean castleRightsBlackK = castleRightString.contains("k");
         boolean castleRightsBlackQ = castleRightString.contains("q");
 
+        //determine move count
+        int totalMoveCount = Integer.parseInt(totalMoveCountString);
+
         //create and return new game state
-        GameState gameState = new GameState(pieces, turnColor, castleRightsWhiteK, castleRightsWhiteQ, castleRightsBlackK, castleRightsBlackQ);
+        GameState gameState = new GameState(pieces, turnColor, castleRightsWhiteK, castleRightsWhiteQ,
+                castleRightsBlackK, castleRightsBlackQ, totalMoveCount);
 
         return gameState;
     }
@@ -118,7 +123,12 @@ public class FenLoader {
         if(gameState.isCastleRightsBlackQ()) fenString +=  "q";
         fenString +=  " ";
 
-        return fenString + "- 0 1"; //TODO
+        fenString += "- 0 "; //TODO
+
+
+        fenString += Integer.toString(gameState.getTotalMoveCount()); //TODO
+
+        return fenString;
     }
 
 

@@ -1,5 +1,6 @@
 package isp.search.chess.ai;
 
+import isp.search.chess.ChessGame;
 import isp.search.chess.GameState;
 import isp.search.chess.Piece;
 import isp.search.chess.enums.PieceColor;
@@ -13,21 +14,27 @@ import java.util.List;
  */
 public class ChessAIFirstMove extends ChessAI {
 
-    public ChessAIFirstMove(GameState gameState, PieceColor pieceColor) {
-       super(gameState,pieceColor);
+    public ChessAIFirstMove(ChessGame chessGame, PieceColor pieceColor) {
+       super(chessGame, pieceColor);
     }
 
+
+    @Override
     public void move() {
-        Piece FirstPieceThatCanMove = gameState.getPieces().stream()
+        GameState currentGameState = chessGame.getGameState();
+
+        Piece FirstPieceThatCanMove = currentGameState.getPieces().stream()
                 .filter(p -> p.getPieceColor() == pieceColor)
-                .filter(p -> MoveCalculator.getLegalMoves(gameState, p).size() > 0)
+                .filter(p -> MoveCalculator.getLegalMoves(currentGameState, p).size() > 0)
                 .findFirst()
                 .get();
 
 
-        List<BoardPosition> moves = MoveCalculator.getLegalMoves(gameState, FirstPieceThatCanMove);
+        List<BoardPosition> moves = MoveCalculator.getLegalMoves(currentGameState, FirstPieceThatCanMove);
         BoardPosition firstMove = moves.get(0);
 
-        gameState.movePieceWithLegalCheck(FirstPieceThatCanMove, firstMove);
+        //move
+        currentGameState.movePieceWithLegalCheck(FirstPieceThatCanMove, firstMove);
     }
+
 }

@@ -2,6 +2,7 @@ package isp.search.chess.gui;
 
 import isp.search.chess.GameState;
 import isp.search.chess.Piece;
+import isp.search.chess.Player;
 import isp.search.chess.UserBoardListener;
 import isp.search.chess.util.BoardPosition;
 import isp.search.chess.util.ChessPieceImageHelper;
@@ -21,10 +22,10 @@ public class SinglePlayerPanel extends JPanel{
     public static final int ROW_COUNT = 8;
 
     private GameState gameState;
-    private UserBoardListener boardListener;
-    private BoardPosition selectedTile;
 
     private BufferedImage chessPieceAtlasImage;
+
+    private List<BoardPosition> selectedTiles;
 
 
     public SinglePlayerPanel(){
@@ -54,9 +55,9 @@ public class SinglePlayerPanel extends JPanel{
         //calculate move indicators
         List<BoardPosition> moveIndicatorPositions = new ArrayList<>();
 
-        if(selectedTile != null) {
+        selectedTiles.stream().forEach(selectedTile -> {
             moveIndicatorPositions.addAll( MoveCalculator.getLegalMoves(gameState, gameState.getPieceAtPosition(selectedTile)) );
-        }
+        });
 
 
         //loop over every square
@@ -71,7 +72,7 @@ public class SinglePlayerPanel extends JPanel{
 
                 g2.setColor((x + y ) % 2 == 0 ? new Color(50, 65, 70) : Color.WHITE);
                 //if tile is selected change color
-                if(selectedTile != null && selectedTile.equals(currentBoardPosition)){
+                if(selectedTiles.stream().anyMatch(selectedTile -> selectedTile.equals(currentBoardPosition))){
                     g2.setColor(new Color(150, 165, 170));
                 }
 
@@ -114,10 +115,14 @@ public class SinglePlayerPanel extends JPanel{
     }
 
 
-    public void renderBoard(GameState gameState, UserBoardListener boardListener, BoardPosition selectedTile){
+    public void renderBoard(GameState gameState, Player playerBlack, Player playerWhite){
         this.gameState = gameState;
-        this.boardListener = boardListener;
-        this.selectedTile = selectedTile;
+
+        this.selectedTiles = new ArrayList<>();
+        if(playerBlack != null && playerBlack.getSelectedTile() != null) selectedTiles.add(playerBlack.getSelectedTile());
+        if(playerWhite != null && playerWhite.getSelectedTile() != null) selectedTiles.add(playerWhite.getSelectedTile());
+
+
         repaint();
         
     }

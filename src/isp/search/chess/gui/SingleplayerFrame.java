@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 
 
 import isp.search.chess.GameState;
+import isp.search.chess.Player;
 import isp.search.chess.UserBoardListener;
 import isp.search.chess.util.BoardPosition;
 
@@ -32,8 +33,8 @@ public class SingleplayerFrame extends JFrame {
     }
 
 
-    public void renderBoard(GameState gameState, UserBoardListener boardListener, BoardPosition selectedTile){
-        singlePlayerPanel.renderBoard(gameState, boardListener, selectedTile);
+    public void renderBoard(GameState gameState, Player playerBlack, Player playerWhite){
+        singlePlayerPanel.renderBoard(gameState, playerBlack, playerWhite);
     }
 
     public void addBoardListener(UserBoardListener boardListener){

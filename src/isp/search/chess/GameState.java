@@ -14,17 +14,20 @@ public class GameState {
     private PieceColor winnerColor;
     private boolean gameFinished;
 
+    private int totalMoveCount;
+
     private static final short ROW_COUNT = 8;
 
 
     public GameState(List<Piece> pieces, PieceColor turnColor,
-                     boolean castleRightsWhiteK, boolean castleRightsWhiteQ, boolean castleRightsBlackK, boolean castleRightsBlackQ) {
+                     boolean castleRightsWhiteK, boolean castleRightsWhiteQ, boolean castleRightsBlackK, boolean castleRightsBlackQ, int totalMoveCount) {
         this.pieces = pieces;
         this.turnColor = turnColor;
         this.castleRightsWhiteK = castleRightsWhiteK;
         this.castleRightsWhiteQ = castleRightsWhiteQ;
         this.castleRightsBlackK = castleRightsBlackK;
         this.castleRightsBlackQ = castleRightsBlackQ;
+        this.totalMoveCount = totalMoveCount;
     }
 
 
@@ -71,6 +74,9 @@ public class GameState {
             //move
             hardMovePiece(piece, newBoardPosition);
 
+            //increase move count
+            totalMoveCount += 1;
+
 
             //test for check mate
             int sumOfMoves = getPieces().stream()
@@ -85,6 +91,13 @@ public class GameState {
                 this.gameFinished = true;
 
                 System.out.println(this.winnerColor + " Won!");
+            }
+
+            //check for max move count
+            if(totalMoveCount > 500){
+                this.gameFinished = true;
+
+                System.out.println("Remi because max move count exceeded!");
             }
 
             return true;
@@ -178,5 +191,9 @@ public class GameState {
 
     public boolean isGameFinished() {
         return gameFinished;
+    }
+
+    public int getTotalMoveCount() {
+        return totalMoveCount;
     }
 }

@@ -1,5 +1,6 @@
 package isp.search.chess.ai;
 
+import isp.search.chess.ChessGame;
 import isp.search.chess.GameState;
 import isp.search.chess.Piece;
 import isp.search.chess.enums.PieceColor;
@@ -11,23 +12,30 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ChessAIRandom extends ChessAI {
 
-    public ChessAIRandom(GameState gameState, PieceColor pieceColor) {
-        super(gameState,pieceColor);
+    public ChessAIRandom(ChessGame chessGame, PieceColor pieceColor) {
+        super(chessGame, pieceColor);
     }
 
-
+    @Override
     public void move() {
+        GameState currentGameState = chessGame.getGameState();
 
-        List<Piece> randomPiecesThatCanMove = gameState.getPieces().stream()
+        //get random piece that is movable
+        List<Piece> randomPiecesThatCanMove = currentGameState.getPieces().stream()
                 .filter(p -> p.getPieceColor() == pieceColor)
-                .filter(p -> MoveCalculator.getLegalMoves(gameState, p).size() > 0)
+                .filter(p -> MoveCalculator.getLegalMoves(currentGameState, p).size() > 0)
                 .toList();
 
         Piece randomPiece = randomPiecesThatCanMove.get(ThreadLocalRandom.current().nextInt(randomPiecesThatCanMove.size()));
 
-        List<BoardPosition> randomMoves = MoveCalculator.getLegalMoves(gameState, randomPiece);
+
+        //get random move from that random piece
+        List<BoardPosition> randomMoves = MoveCalculator.getLegalMoves(currentGameState, randomPiece);
         BoardPosition randomMove = randomMoves.get(ThreadLocalRandom.current().nextInt(randomMoves.size()));
 
-        gameState.movePieceWithLegalCheck(randomPiece, randomMove);
+        //move
+        currentGameState.movePieceWithLegalCheck(randomPiece, randomMove);
     }
+
+
 }

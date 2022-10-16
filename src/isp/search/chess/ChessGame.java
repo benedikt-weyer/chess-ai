@@ -1,73 +1,35 @@
 package isp.search.chess;
 
-import isp.search.chess.ai.AlphaBetaPruning;
-import isp.search.chess.ai.ChessAI;
-import isp.search.chess.ai.ChessAIFirstMove;
 import isp.search.chess.enums.PieceColor;
 import isp.search.chess.gui.SingleplayerFrame;
-import isp.search.chess.util.BoardPosition;
 import isp.search.chess.util.FenLoader;
 
-public class ChessGame implements UserInputListener {
+public class ChessGame {
     private GameState gameState;
-    private ChessAI chessAI;
-    private UserBoardListener userBoardListener;
+
     private SingleplayerFrame singleplayerFrame;
 
-    private BoardPosition selectedTile = null;
+
+    private Player playerWhite, playerBlack;
 
     public ChessGame(String fenString) {
 
         //load game state
         this.gameState = FenLoader.loadGameStateFromFenString(fenString);
 
-        //init user controls
-        this.userBoardListener = new UserBoardListener(this);
+        //create frame
+        this.singleplayerFrame = new SingleplayerFrame();
 
-
-        singleplayerFrame = new SingleplayerFrame();
-        singleplayerFrame.renderBoard(gameState, userBoardListener, selectedTile);
-        singleplayerFrame.addBoardListener(userBoardListener);
-
-        //init ai
-        this.chessAI = new ChessAIFirstMove(gameState, PieceColor.WHITE); //Hier AI tauschen
-        chessAI.move(); // first move
         rerender();
     }
 
-    @Override
-    public void onTilePressed(BoardPosition pressedTile) {
 
-        if (selectedTile != null && selectedTile.equals(pressedTile)) {
-            selectedTile = null;
-        } else { //if new tile pressed
-            Piece pieceAtSelectedTile = gameState.getPieceAtPosition(selectedTile);
-            if (pieceAtSelectedTile != null) {
-                //move player
-                if (!gameState.isGameFinished()) {
-                    boolean moveSuccess = gameState.movePieceWithLegalCheck(pieceAtSelectedTile, pressedTile);
+    public void setPlayerWhite(Player playerWhite) {
+        this.playerWhite = playerWhite;
+    }
 
-                    if (moveSuccess) {
-                        //move ai
-                        if (!gameState.isGameFinished()) {
-                            chessAI.move();
-                        }
-
-                        //deselect move indicator
-                        selectedTile = null;
-                    } else {
-                        selectedTile = pressedTile;
-                    }
-                } else {
-                    selectedTile = pressedTile;
-                }
-            } else {
-                selectedTile = pressedTile;
-            }
-        }
-
-        //rerender
-        rerender();
+    public void setPlayerBlack(Player playerBlack) {
+        this.playerBlack = playerBlack;
     }
 
     public GameState getGameState() {
@@ -75,6 +37,37 @@ public class ChessGame implements UserInputListener {
     }
 
     public void rerender() {
-        singleplayerFrame.renderBoard(gameState, userBoardListener, selectedTile);
+
+        this.singleplayerFrame.renderBoard(gameState, playerBlack, playerWhite);
+    }
+
+    //start chess game
+    public boolean start() {
+        if(playerBlack == null || playerWhite == null) return false;
+
+        while(!gameState.isGameFinished()){
+
+            if(gameState.getTurnColor() == PieceColor.WHITE){
+                //request move
+                playerWhite.onMoveRequested();
+
+
+            }else if(gameState.getTurnColor() == PieceColor.BLACK){
+                //request move
+                playerBlack.onMoveRequested();
+
+            }
+
+            rerender();
+
+        }
+
+        return true;
+    }
+
+    public void createUserBoardListener(UserInputListener userInputListener) {
+        //this.userBoardListener = new UserBoardListener(userInputListener);
+
+        this.singleplayerFrame.addBoardListener(new UserBoardListener(userInputListener));
     }
 }
