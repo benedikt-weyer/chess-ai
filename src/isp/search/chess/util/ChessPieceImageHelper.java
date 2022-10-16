@@ -9,21 +9,21 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class ChessPieceImageHelper{
+public class ChessPieceImageHelper {
 
     final static String CHESS_TEXTURE_ATLAS_PATH = "/piece-atlas.png";
 
-    public static Rectangle getBoundsByPiece(PieceType pieceType, PieceColor pieceColor){
+    public static Rectangle getBoundsByPiece(PieceType pieceType, PieceColor pieceColor) {
 
-        final short pieceWidth=170, pieceHeight=170; 
+        final short pieceWidth = 170, pieceHeight = 170;
 
-        short x=0;
-        if(pieceType == PieceType.KING) x=0;
-        if(pieceType == PieceType.QUEEN) x=1*pieceWidth;
-        if(pieceType == PieceType.BISHOP) x=2*pieceWidth;
-        if(pieceType == PieceType.KNIGHT) x=3*pieceWidth;
-        if(pieceType == PieceType.ROOK) x=4*pieceWidth;
-        if(pieceType == PieceType.PAWN) x=5*pieceWidth;
+        short x = 0;
+        if (pieceType == PieceType.KING) x = 0;
+        if (pieceType == PieceType.QUEEN) x = 1 * pieceWidth;
+        if (pieceType == PieceType.BISHOP) x = 2 * pieceWidth;
+        if (pieceType == PieceType.KNIGHT) x = 3 * pieceWidth;
+        if (pieceType == PieceType.ROOK) x = 4 * pieceWidth;
+        if (pieceType == PieceType.PAWN) x = 5 * pieceWidth;
 
         short y = pieceColor == PieceColor.WHITE ? 0 : pieceHeight;
 
@@ -31,7 +31,7 @@ public class ChessPieceImageHelper{
     }
 
 
-    public static BufferedImage getTextureAtlas(){
+    public static BufferedImage getTextureAtlas() {
 
         BufferedImage textureAtlasImage = null;
 
@@ -41,7 +41,7 @@ public class ChessPieceImageHelper{
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+
         return textureAtlasImage;
     }
 }

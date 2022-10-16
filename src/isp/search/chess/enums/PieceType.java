@@ -8,16 +8,24 @@ public enum PieceType {
     KING,
     QUEEN;
 
-    public static PieceType getByFenChar(char fenChar){
 
-        switch(Character.toLowerCase(fenChar)){
-            case 'r': return ROOK;
-            case 'b': return BISHOP;
-            case 'n': return KNIGHT;
-            case 'p': return PAWN;
-            case 'k': return KING;
-            case 'q': return QUEEN;
-            default: return null;
+    public static PieceType getByFenChar(char fenChar) {
+
+        switch (Character.toLowerCase(fenChar)) {
+            case 'r':
+                return ROOK;
+            case 'b':
+                return BISHOP;
+            case 'n':
+                return KNIGHT;
+            case 'p':
+                return PAWN;
+            case 'k':
+                return KING;
+            case 'q':
+                return QUEEN;
+            default:
+                return null;
         }
 
     }

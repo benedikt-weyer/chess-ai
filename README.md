@@ -19,7 +19,7 @@ Diese Aufgabe wurde von allen drei Gruppenmitgliedern geteilt und gemeinsam bear
 ### 2. Implementieren eines Schachprogramms
 Dies wurde hauptsächlich von Benni durchgeführt. Er hat das Schachprogramm überwiegend alleine geschrieben, da er größere Erfahrung mit Schach hat.
 ### 3. Implementieren der Heuristiken
-Die Implementierung der Heuristiken wurde von Mirco und Julius durchgeführt. Dabei wurde die Arbeit aufgeteilt, wobei Mirco die Heuristiken ... und ... implementiert hat, während Julius die Heuristiken ... und ... implementiert hat.
+Diese Aufgabe wurde von allen drei Gruppenmitgliedern geteilt und gemeinsam bearbeitet. überwiegend wurde hier mit pair programming gearbeitet.
 ### 4. Testen der Heuristiken
 Die Heuristiken wurden von allen drei Gruppenmitgliedern getestet. 
 ### 5. Vergleichen der Heuristiken
@@ -62,8 +62,23 @@ Die Heuristiken sollen die Qualität eines Zuges bewerten. Dafür werden die Zü
 daher Alpha Beta Pruning evtl.
 ![](./rsc/2022-10-16%2012_50_08-Window.png)
 
+### 3. und 4. also Implementieren und testen der Heuristiken
+Wir haben mit den einfachsten Heursitiken angefangen, also wie viele Schachfiguren von und - wie viele Figuren vom Gegner 
+noch stehen.
+Weiß hat dabei mit der Heuristik gespielt und mit einer Depth von 1 geschaut was am meisten Sinn macht.
+Schwarz hat mit der Random Schach AI gespielt. Oft konnte Weiß gewinnen aber meist kam es zu einem Unentschieden, da Weiß mit einer
+tiefensuche bis depth = 1 nicht besonders weit in die Zukunft schauen konnte und daher auch nicht das Schachmatt erzwingen konnte.
+Mit einer Tiefe von 2 war der Algorithmus sehr langsam.
+
+#### Probleme:
+Auch wenn die Heuristik sehr einfach ist, ist die Implementierung schwerer gewesen als gedacht. Die KI hat trotz
+logisch korrekter Implementierung nicht immer das richtige Ergebnis geliefert. Uns fiel auf, dass mit einer Tiefe von 0 (also nur der
+Beachtung der aktuellen Situation) immer der richtige Zug berechnet und gefunden wurde. Bei einer Tiefe von 2
+wurde zwar der richtige Zug aus der Berechnung gefunden, aber
+die Berechnung selbst schien nicht korrekt zu sein. Nach längerer Suche haben wir herausgefunden, dass die Berechnung nicht korrekt war, da ...
 
 ## Sources
-https://www.quora.com/What-are-some-heuristics-for-quickly-evaluating-chess-positions \
-https://www.youtube.com/watch?v=hCbfTm-b6iM \
-https://www.youtube.com/watch?v=l-hh51ncgDI
+- https://www.chessprogramming.org/Alpha-Beta
+- https://www.quora.com/What-are-some-heuristics-for-quickly-evaluating-chess-positions
+- https://www.youtube.com/watch?v=hCbfTm-b6iM
+- https://www.youtube.com/watch?v=l-hh51ncgDI

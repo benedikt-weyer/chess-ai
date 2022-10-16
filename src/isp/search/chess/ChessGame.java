@@ -43,16 +43,16 @@ public class ChessGame {
 
     //start chess game
     public boolean start() {
-        if(playerBlack == null || playerWhite == null) return false;
+        if (playerBlack == null || playerWhite == null) return false;
 
-        while(!gameState.isGameFinished()){
+        while (!gameState.isGameFinished()) {
 
-            if(gameState.getTurnColor() == PieceColor.WHITE){
+            if (gameState.getTurnColor() == PieceColor.WHITE) {
                 //request move
                 playerWhite.onMoveRequested();
 
 
-            }else if(gameState.getTurnColor() == PieceColor.BLACK){
+            } else if (gameState.getTurnColor() == PieceColor.BLACK) {
                 //request move
                 playerBlack.onMoveRequested();
 
