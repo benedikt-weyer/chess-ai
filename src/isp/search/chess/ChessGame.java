@@ -62,6 +62,12 @@ public class ChessGame {
 
         }
 
+        if(gameState.getWinnerColor() != null){
+            System.out.println(gameState.getWinnerColor() + " WON!");
+        }else{
+            System.out.println("REMI!");
+        }
+
         return true;
     }
 

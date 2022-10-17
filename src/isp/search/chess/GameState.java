@@ -79,18 +79,32 @@ public class GameState {
 
 
             //test for check mate
-            int sumOfMoves = getPieces().stream()
-                    .filter(p -> p.getPieceColor() == getTurnColor()) //filter opponents
-                    .map(p -> MoveCalculator.getLegalMoves(this, p).size())
-                    .mapToInt(Integer::intValue)
-                    .sum();
+            int sumOfMoves = MoveCalculator.getAllLegalMoves(this, this.turnColor).size();
+
 
             if(sumOfMoves == 0){
-                //check mate
-                this.winnerColor = (getTurnColor() == PieceColor.BLACK) ? PieceColor.WHITE : PieceColor.BLACK;
-                this.gameFinished = true;
 
-                System.out.println(this.winnerColor + " Won!");
+                //get king
+                Piece king = pieces.stream()
+                        .filter(p -> p.getPieceColor() == this.turnColor)
+                        .filter(p -> p.getPieceType() == PieceType.KING)
+                        .findFirst()
+                        .get();
+
+                //check for stalemate
+                boolean isInCheck = MoveCalculator.getAllLegalMoves(this, (this.turnColor == PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE)).stream()
+                        .anyMatch(move -> move.getNewBoardPosition().equals(king.getBoardPosition()));
+
+                if(isInCheck){
+                    //check mate
+                    this.winnerColor = (getTurnColor() == PieceColor.BLACK) ? PieceColor.WHITE : PieceColor.BLACK;
+                    this.gameFinished = true;
+                }else{
+                    //stalemate
+                    this.gameFinished = true;
+                }
+                System.out.println("game finished");
+
             }
 
             //check for max move count

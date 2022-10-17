@@ -70,7 +70,7 @@ public class AlphaBetaPruning {
 
 
     public double minimax(GameState currentGameState, PieceColor maximizingPieceColor, int depth, double alpha, double beta){
-        if(depth == 0) return evaluationFunction.apply(currentGameState);
+        if(depth == 0 || currentGameState.isGameFinished()) return evaluationFunction.apply(currentGameState);
 
 
         if(currentGameState.getTurnColor() == PieceColor.WHITE){

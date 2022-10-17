@@ -52,7 +52,7 @@ public class ChessAIEvaluator extends ChessAI{
 
                 double evalOfMove = alphaBetaPruning.minimax(clonedGameState, PieceColor.WHITE, this.depth, bestMoveEval, Double.POSITIVE_INFINITY);
 
-                System.out.println(String.format("Move for %s: %s with eval of %s", this.pieceColor, legalMove, evalOfMove));
+                //System.out.println(String.format("Move for %s: %s with eval of %s", this.pieceColor, legalMove, evalOfMove));
 
                 if (evalOfMove >= bestMoveEval) {
                     bestMove = legalMove;

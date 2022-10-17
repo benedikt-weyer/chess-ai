@@ -14,9 +14,9 @@ public class App {
 
         ChessGame chessGame = new ChessGame(fenStringStartingPosition);
 
-        ChessAI evaluatorChessAI = new ChessAIEvaluator(chessGame, PieceColor.WHITE, Evaluator::evaluatorV2, 2);
+        ChessAI evaluatorChessAI = new ChessAIEvaluator(chessGame, PieceColor.WHITE, Evaluator::evaluatorV1, 1);
 
-        ChessAI evaluatorChessAI2 = new ChessAIEvaluator(chessGame, PieceColor.BLACK, Evaluator::evaluatorV2, 2);
+        ChessAI evaluatorChessAI2 = new ChessAIEvaluator(chessGame, PieceColor.BLACK, Evaluator::evaluatorV3, 1);
 
         ChessAI randomChessAI = new ChessAIRandom(chessGame, PieceColor.BLACK);
 
