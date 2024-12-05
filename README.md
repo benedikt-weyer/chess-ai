@@ -1,4 +1,4 @@
-# IS-P1
+# Chess AI
 
 
 
